@@ -1,0 +1,114 @@
+---
+title: "binf8441"
+author: yue wu
+date: march 1, 2018
+output:
+  html_document: #ioslides_presentation
+    toc: true
+    toc_depth: 3
+params:
+  n: 100
+---
+
+```{r setup, include=FALSE}
+#eval=FALSE echo=FALSE include=FALSE
+knitr::opts_chunk$set(echo = TRUE)
+```
+## hypothersis testing
+
+
+H0 and H1--> error(symmetric)--> test with small error
+
+```{r cars, echo=FALSE}
+require(knitr)
+mat=matrix(c("Type I error","","","Type II error"),nrow=2,ncol=2)
+colnames(mat)=c("H0","H1")
+rownames(mat)=c("accepting","rejecting")
+kable(mat)
+```
+
+We will control type I error
+
+If type I error is small, typically $\leq 0.05$ we reject H0/accepting H1/ **H1 is true**
+
+If type I error is large $\geq 0.05$ we **cannot reject H0**, However, it is type II error that are about accepting H0, if it is not known, we can not say H0 is true statistically.
+
+can not rejecting H0 $\neq$ accepting H0
+
+$\alpha$ H1 is true <==> accepting H1 <==> rejecting H0
+
+always put the expected as alternative hypothersis H1, as this way you can tell whether H1 is true(because we control type I error)
+
+There are three major component in a hypothesis test
+
+1. H0 and H1. we always put the expected significant conclusion in H1
+
+
+2. Ho and H1 are the hypotheses about **parameters** (**population**), not sample statistics(such as mean, already observe, and pretty sure) or specific case of inference/estimation
+
+
+3. test statistics, **summarize** the data
+
+
+4. Rejection region: decision rule for Rejecting H0. we calculating the threhold $\alpha$, by controling type I error. To find tyoe I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.
+
+H_0: $\mu_1 = \mu_2$ H_1: $\mu_1 \geq \mu_2$
+
+$\rightarrow$ H_0: $\mu1 - \mu2 = 0$ H_1: $\mu1 - \mu2 < 0$
+
+It is reasonable to use test statistics $\overline{X_1}-\overline{X_2}$
+
+we reject $H_0$ if $\overline{X_1}-\overline{X_2} \leq$  a Type I error $P(\text{rejecting $H_0$}|\text{$H_0$ is true})=P(\overline{X_1}-\overline{X_2} \leq \alpha|\mu_1=\mu_2)$
+
+If we assume normality, $X_1^i \sim Normal{(\mu_1, \sigma_1)}, X_2^i \sim Normal(\mu_2, \sigma_2)$
+
+r.v. $Y=\overline{X_1}-\overline{X_2}$
+
+#### different cases
+
+##### Same mean same variance
+
+$H_0$:
+\[
+   X_1^i\, X_2^i \sim \text{iid} \sim Normal{(\mu,\sigma^2)}\\
+  \overline{X_1}-\overline{X_2} \sim iid \sim Normal{(0,2\sigma^2/n)}
+\]
+
+we want to contorl Type I error $\leq 5\%$
+\[
+P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
+\]
+a is the 5% quantile of the null dist of the test statistics
+
+##### if the sample size not equal
+\[
+  Var(\overline{X_1}-\overline{X_2})=Var(\overline{X_1})-Var(\overline{X_2})=\sigma^2/n+\sigma^2/m
+\]
+$\sigma^2$ need to be esimated, if same variance use whole population
+\[
+\sigma^2=\text{sample variance}=\frac{1}{n+m-1} \sum_{i=1}^{n+m}{(x_i-\overline{x})^2}
+\]
+if not, separately do it for each group
+same \overline different variance
+
+t statistics $\frac{\overline{X_1}-\overline{X_2}}{var(\overline{X_1}-\overline{X_2})}$ will be a $Normal{(0,1)}$ standardized
+
+\[
+  H_0 : \  \mu_1 = \mu_2 \
+  H_1 : \  \mu_1 \neq \mu_2
+\]
+
+It is reasonable to use test statistics $\overline{X_1}-\overline{X_2}$
+
+we reject $H_0$ if $\overline{X_1}-\overline{X_2} \leq a$ or $\overline{X_1}-\overline{X_2} \geq b$
+
+Type I error
+\[
+= P(\text{rejecting }H_0 \  | \  H_0\text{ is true})=P(\overline{X_1}-\overline{X_2}) \leq a \   \overline{X_1}-\overline{X_2} \geq b \  | \  \mu_1=\mu_2)=P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)+P(\overline{X_1}-\overline{X_2} \geq b \  | \  \mu_1=\mu_2)
+\]
+
+\[
+  \text{add assumption: }P(\overline{X_1}-\overline{X_2} \leq a \  | \  |\mu_1=\mu_2) = P(\overline{X_1}-\overline{X_2} \geq a \  | \  \mu_1=\mu_2)
+\]
+a is 2.5% quantile of the null distr of $\overline{x_1}-\overline{x_2}$
+b 97.5%
