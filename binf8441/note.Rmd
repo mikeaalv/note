@@ -37,7 +37,7 @@ can not rejecting H0 $\neq$ accepting H0
 
 $\alpha$ H1 is true <==> accepting H1 <==> rejecting H0
 
-always put the expected as alternative hypothersis H1, as this way you can tell whether H1 is true(because we control type I error)
+**always put the expected as alternative hypothersis H1, as this way you can tell whether H1 is true(because we control type I error)**
 
 There are three major component in a hypothesis test
 
@@ -50,7 +50,7 @@ There are three major component in a hypothesis test
 3. test statistics, **summarize** the data
 
 
-4. Rejection region: decision rule for Rejecting H0. we calculating the threhold $\alpha$, by controling type I error. To find tyoe I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.
+4. Rejection region: decision rule for Rejecting H0. we calculating the threhold(critical value) $\alpha$, by controling type I error. To find tyoe I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.
 
 H_0: $\mu_1 = \mu_2$ H_1: $\mu_1 \geq \mu_2$
 
@@ -112,3 +112,88 @@ Type I error
 \]
 a is 2.5% quantile of the null distr of $\overline{x_1}-\overline{x_2}$
 b 97.5%
+
+The hardest part: the **Null distribution** of test statistics
+
+Rejection region: we reject $H_0$ if t > a, where a is 95% (upper tail) quantile of the null dist of t
+
+P value: $P=P(t > t_{obs} \  | \  H_0)$ (observed test statistics): we reject $H_0$ if P-value $\leq \alpha$ such as 5% $alpha$ is prespecified
+
+Two side test:
+
+$H_0 \  \mu_1 = \mu_2 \  \mu_1 \neq \mu_2$
+
+$t = \overline{X_1} - \overline{X_2}$
+
+rejection region we reject $H_0$ if $t<a$ or $t>b$
+
+where a(b) is 2.5%(97.5%) quantile of the null distri of t
+
+P-value $=2P(t<t_{obs} \  | \  H_0)$ ($=2P(t>t_{obs} \  | \  H_0)$) if $t_obs$ is negative(positive)
+
+
+### Compare performance
+evalution the performance of a hypothesis testing
+
+both test need to control same type I error
+
+Power $=P(\text{reject }H_0 \  | \  H_1)=1- \text{Type II error} = P(t>a \  | \  H_1)$
+(H1 might be a interval-->power is a curve-->increase with distance)
+
+which depends on the alternative distribution of t. When the alternative hypothesis is an interval, we need to calculate power for every possible value of the parameter. Thus the power is a function of the population of the parameter in H1.
+
+MP test(most powerful test): likelihood ratio test
+
+#### Two sample t test
+
+$H_0 \  \mu_1 = \mu_2 \ H_1 \  \mu_1 \leq \mu_2$
+
+$t = \frac{\overline{X_1}-\overline{X_2}}{sd(\overline{X_1} - \overline{X_2})}$
+
+$\overline{X_1}-\overline{X_2}$ observed evidence
+
+$sd(\overline{X_1}-\overline{X_2})$ sampling effect
+
+significant(differences observe is not caused by sampling)
+
+rejection region t > a, a is 95% quantile of the null distr(t distribution)
+
+#### F test
+can multiple groups all equal or not
+
+can test variance:
+
+$H_0: \sigma_1^2 = \sigma_2^2 \  H_1: \sigma_1^2 neq \sigma_2^2$
+
+can use differences or ratio using ratio There
+
+$F=\frac{S_x^2}{X_y^2}$
+$S=\frac{1}{n-1}\sum_{i-1}^{n}{(X_i-\overline{X})^2}$
+
+rejection region F > a or F < b
+where a is the 97.5% quantile of the null distr(F distribution)
+
+$F(\alpha_1=n-1,\alpha_2=m-1)$
+
+P-value $2P(F>F_{obs}|H_0)$ if $F_{obs}>1$ ...
+
+#### association test
+```{r smok, echo=FALSE}
+require(knitr)
+mat=matrix(c("6","3","2","9"),nrow=2,ncol=2)
+colnames(mat)=c("smoking","nonsmoking")
+rownames(mat)=c("male","female")
+kable(mat)
+```
+
+$H_0$ : gender and smoking are independent --> $P(\text{male and smoking})=P(\text{male})P(\text{smoking})$
+$H_1$ : gender and smoking are associated
+
+observed and expected value
+
+test statistics $\chi^2=\sum{\frac{(O-E)^2}{E}}$
+assum poisson mean=variance
+
+rejection region: $\chi^2>a$ where is the 95% quantile of the null distr($\chi^2$ distri with $df ==(\text{# of column - 1})(\text{# of row - 1)}$)
+
+P-value: $P(\chi^2>\chi^2_{obs}|H_0)$

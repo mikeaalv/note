@@ -126,7 +126,9 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#hypothersis-testing">hypothersis testing</a></li>
+<li><a href="#hypothersis-testing">hypothersis testing</a><ul>
+<li><a href="#compare-performance">Compare performance</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -161,13 +163,13 @@ $(document).ready(function () {
 <p>If type I error is large <span class="math inline">\(\geq 0.05\)</span> we <strong>cannot reject H0</strong>, However, it is type II error that are about accepting H0, if it is not known, we can not say H0 is true statistically.</p>
 <p>can not rejecting H0 <span class="math inline">\(\neq\)</span> accepting H0</p>
 <p><span class="math inline">\(\alpha\)</span> H1 is true &lt;==&gt; accepting H1 &lt;==&gt; rejecting H0</p>
-<p>always put the expected as alternative hypothersis H1, as this way you can tell whether H1 is true(because we control type I error)</p>
+<p><strong>always put the expected as alternative hypothersis H1, as this way you can tell whether H1 is true(because we control type I error)</strong></p>
 <p>There are three major component in a hypothesis test</p>
 <ol style="list-style-type: decimal">
 <li><p>H0 and H1. we always put the expected significant conclusion in H1</p></li>
 <li><p>Ho and H1 are the hypotheses about <strong>parameters</strong> (<strong>population</strong>), not sample statistics(such as mean, already observe, and pretty sure) or specific case of inference/estimation</p></li>
 <li><p>test statistics, <strong>summarize</strong> the data</p></li>
-<li><p>Rejection region: decision rule for Rejecting H0. we calculating the threhold <span class="math inline">\(\alpha\)</span>, by controling type I error. To find tyoe I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.</p></li>
+<li><p>Rejection region: decision rule for Rejecting H0. we calculating the threhold(critical value) <span class="math inline">\(\alpha\)</span>, by controling type I error. To find tyoe I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.</p></li>
 </ol>
 <p>H_0: <span class="math inline">\(\mu_1 = \mu_2\)</span> H_1: <span class="math inline">\(\mu_1 \geq \mu_2\)</span></p>
 <p><span class="math inline">\(\rightarrow\)</span> H_0: <span class="math inline">\(\mu1 - \mu2 = 0\)</span> H_1: <span class="math inline">\(\mu1 - \mu2 &lt; 0\)</span></p>
@@ -202,11 +204,77 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 <p>It is reasonable to use test statistics <span class="math inline">\(\overline{X_1}-\overline{X_2}\)</span></p>
 <p>we reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\overline{X_1}-\overline{X_2} \leq a\)</span> or <span class="math inline">\(\overline{X_1}-\overline{X_2} \geq b\)</span></p>
 <p>Type I error <span class="math display">\[
-= P(\text{rejecting }H_0 \  | \  H_0\text{ is true})=P(\overline{X_1}-\overline{X_2}) \leq a \   \overline{X_1}-\overline{X_2} \geq a \  | \  \mu_1=\mu_2)=P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)+P(\overline{X_1}-\overline{X_2} \geq a \  | \  \mu_1=\mu_2)
+= P(\text{rejecting }H_0 \  | \  H_0\text{ is true})=P(\overline{X_1}-\overline{X_2}) \leq a \   \overline{X_1}-\overline{X_2} \geq b \  | \  \mu_1=\mu_2)=P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)+P(\overline{X_1}-\overline{X_2} \geq b \  | \  \mu_1=\mu_2)
 \]</span></p>
 <p><span class="math display">\[
   \text{add assumption: }P(\overline{X_1}-\overline{X_2} \leq a \  | \  |\mu_1=\mu_2) = P(\overline{X_1}-\overline{X_2} \geq a \  | \  \mu_1=\mu_2)
 \]</span> a is 2.5% quantile of the null distr of <span class="math inline">\(\overline{x_1}-\overline{x_2}\)</span> b 97.5%</p>
+<p>The hardest part: the <strong>Null distribution</strong> of test statistics</p>
+<p>Rejection region: we reject <span class="math inline">\(H_0\)</span> if t &gt; a, where a is 95% (upper tail) quantile of the null dist of t</p>
+<p>P value: <span class="math inline">\(P=P(t &gt; t_{obs} \  | \  H_0)\)</span> (observed test statistics): we reject <span class="math inline">\(H_0\)</span> if P-value <span class="math inline">\(\leq \alpha\)</span> such as 5% <span class="math inline">\(alpha\)</span> is prespecified</p>
+<p>Two side test:</p>
+<p><span class="math inline">\(H_0 \  \mu_1 = \mu_2 \  \mu_1 \neq \mu_2\)</span></p>
+<p><span class="math inline">\(t = \overline{X_1} - \overline{X_2}\)</span></p>
+<p>rejection region we reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(t&lt;a\)</span> or <span class="math inline">\(t&gt;b\)</span></p>
+<p>where a(b) is 2.5%(97.5%) quantile of the null distri of t</p>
+<p>P-value <span class="math inline">\(=2P(t&lt;t_{obs} \  | \  H_0)\)</span> (<span class="math inline">\(=2P(t&gt;t_{obs} \  | \  H_0)\)</span>) if <span class="math inline">\(t_obs\)</span> is negative(positive)</p>
+</div>
+</div>
+<div id="compare-performance" class="section level3">
+<h3>Compare performance</h3>
+<p>evalution the performance of a hypothesis testing</p>
+<p>both test need to control same type I error</p>
+<p>Power <span class="math inline">\(=P(\text{reject }H_0 \  | \  H_1)=1- \text{Type II error} = P(t&gt;a \  | \  H_1)\)</span> (H1 might be a interval–&gt;power is a curve–&gt;increase with distance)</p>
+<p>which depends on the alternative distribution of t. When the alternative hypothesis is an interval, we need to calculate power for every possible value of the parameter. Thus the power is a function of the population of the parameter in H1.</p>
+<p>MP test(most powerful test): likelihood ratio test</p>
+<div id="two-sample-t-test" class="section level4">
+<h4>Two sample t test</h4>
+<p><span class="math inline">\(H_0 \  \mu_1 = \mu_2 \ H_1 \  \mu_1 \leq \mu_2\)</span></p>
+<p><span class="math inline">\(t = \frac{\overline{X_1}-\overline{X_2}}{sd(\overline{X_1} - \overline{X_2})}\)</span></p>
+<p><span class="math inline">\(\overline{X_1}-\overline{X_2}\)</span> observed evidence</p>
+<p><span class="math inline">\(sd(\overline{X_1}-\overline{X_2})\)</span> sampling effect</p>
+<p>significant(differences observe is not caused by sampling)</p>
+<p>rejection region t &gt; a, a is 95% quantile of the null distr(t distribution)</p>
+</div>
+<div id="f-test" class="section level4">
+<h4>F test</h4>
+<p>can multiple groups all equal or not</p>
+<p>can test variance:</p>
+<p><span class="math inline">\(H_0: \sigma_1^2 = \sigma_2^2 \  H_1: \sigma_1^2 neq \sigma_2^2\)</span></p>
+<p>can use differences or ratio using ratio There</p>
+<p><span class="math inline">\(F=\frac{S_x^2}{X_y^2}\)</span> <span class="math inline">\(S=\frac{1}{n-1}\sum_{i-1}^{n}{(X_i-\overline{X})^2}\)</span></p>
+<p>rejection region F &gt; a or F &lt; b where a is the 97.5% quantile of the null distr(F distribution)</p>
+<p><span class="math inline">\(F(\alpha_1=n-1,\alpha_2=m-1)\)</span></p>
+<p>P-value <span class="math inline">\(2P(F&gt;F_{obs}|H_0)\)</span> if <span class="math inline">\(F_{obs}&gt;1\)</span> …</p>
+</div>
+<div id="association-test" class="section level4">
+<h4>association test</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">smoking</th>
+<th align="left">nonsmoking</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>male</td>
+<td align="left">6</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td>female</td>
+<td align="left">3</td>
+<td align="left">9</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(H_0\)</span> : gender and smoking are independent –&gt; <span class="math inline">\(P(\text{male and smoking})=P(\text{male})P(\text{smoking})\)</span> <span class="math inline">\(H_1\)</span> : gender and smoking are associated</p>
+<p>observed and expected value</p>
+<p>test statistics <span class="math inline">\(\chi^2=\sum{\frac{(O-E)^2}{E}}\)</span> assum poisson mean=variance</p>
+<p>rejection region: <span class="math inline">\(\chi^2&gt;a\)</span> where is the 95% quantile of the null distr(<span class="math inline">\(\chi^2\)</span> distri with <span class="math inline">\(df ==(\text{# of column - 1})(\text{# of row - 1)}\)</span>)</p>
+<p>P-value: <span class="math inline">\(P(\chi^2&gt;\chi^2_{obs}|H_0)\)</span></p>
 </div>
 </div>
 </div>
