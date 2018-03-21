@@ -21,7 +21,7 @@ H0 and H1--> error(symmetric)--> test with small error
 
 ```{r cars, echo=FALSE}
 require(knitr)
-mat=matrix(c("Type I error","","","Type II error"),nrow=2,ncol=2)
+mat=matrix(c("","Type I error","Type II error",""),nrow=2,ncol=2)
 colnames(mat)=c("H0","H1")
 rownames(mat)=c("accepting","rejecting")
 kable(mat)
@@ -50,7 +50,7 @@ There are three major component in a hypothesis test
 3. test statistics, **summarize** the data
 
 
-4. Rejection region: decision rule for Rejecting H0. we calculating the threhold(critical value) $\alpha$, by controling type I error. To find tyoe I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.
+4. Rejection region: decision rule for Rejecting H0. we calculating the threhold(critical value) $\alpha$, by controling type I error. To find type I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.
 
 H_0: $\mu_1 = \mu_2$ H_1: $\mu_1 \geq \mu_2$
 
@@ -117,7 +117,7 @@ The hardest part: the **Null distribution** of test statistics
 
 Rejection region: we reject $H_0$ if t > a, where a is 95% (upper tail) quantile of the null dist of t
 
-P value: $P=P(t > t_{obs} \  | \  H_0)$ (observed test statistics): we reject $H_0$ if P-value $\leq \alpha$ such as 5% $alpha$ is prespecified
+P value: $P=P(t > t_{obs} \  | \  H_0)$ (observed test statistics): we reject $H_0$ if P-value $\leq \alpha$ such as 5% $alpha$ is prespecified   pvalue is estimation of type I error
 
 Two side test:
 
@@ -140,7 +140,7 @@ both test need to control same type I error
 Power $=P(\text{reject }H_0 \  | \  H_1)=1- \text{Type II error} = P(t>a \  | \  H_1)$
 (H1 might be a interval-->power is a curve-->increase with distance)
 
-which depends on the alternative distribution of t. When the alternative hypothesis is an interval, we need to calculate power for every possible value of the parameter. Thus the power is a function of the population of the parameter in H1.
+which depends on the **alternative distribution** of t. When the alternative hypothesis is an interval, we need to calculate power for every possible value of the parameter. Thus the power is a function of the population of the parameter in H1.
 
 MP test(most powerful test): likelihood ratio test
 
@@ -163,11 +163,11 @@ can multiple groups all equal or not
 
 can test variance:
 
-$H_0: \sigma_1^2 = \sigma_2^2 \  H_1: \sigma_1^2 neq \sigma_2^2$
+$H_0: \sigma_1^2 = \sigma_2^2 \  H_1: \sigma_1^2 \neq \sigma_2^2$
 
 can use differences or ratio using ratio There
 
-$F=\frac{S_x^2}{X_y^2}$
+$F=\frac{S_x^2}{S_y^2}$
 $S=\frac{1}{n-1}\sum_{i-1}^{n}{(X_i-\overline{X})^2}$
 
 rejection region F > a or F < b
@@ -186,14 +186,68 @@ rownames(mat)=c("male","female")
 kable(mat)
 ```
 
-$H_0$ : gender and smoking are independent --> $P(\text{male and smoking})=P(\text{male})P(\text{smoking})$
-$H_1$ : gender and smoking are associated
+$H_0$ : gender and smoking are independent <==> $P(\text{male and smoking})=P(\text{male})P(\text{smoking})$
+$H_1$ : gender and smoking are associated/not independent
+
+smoking and gender are r.v.
 
 observed and expected value
 
 test statistics $\chi^2=\sum{\frac{(O-E)^2}{E}}$
-assum poisson mean=variance
+assum poisson mean=variance if large enough normal distr
 
+always compare observation and expected from $H_0$
+$t=\sum_{i=1}^{c}{\sum_{j=1}^{r}{\frac{(o_{ij}-e_{ij})^2}{e_{ij}}}}$ expected value are not always integers, assuming data follow poisson distr, varince==mean $e_{ij}$ is variance because $(o_{ij}-e_{ij})^2$ is squared level
+
+comparing: t test $mean/sd$
+
+Rejection region: we reject $H_0$ if t > a (critical value) where a is 95% quanitle of null distr()
+
+P value: we reject $H_0$ if p-value $\leq$ 0.05 $P(t>t_{obs} | H_0)$
+
+null distr is always needed/difficult
+$df=(r-1)(c-1)$ row column
+
+if $X$ ~ $Normal$ approximately $X^2$ ~ $\chi^2$ heavy tail more in tail, non-symmetric/ based on distance/ sample size large enough(every individual count) $<5$ for one would be small
 rejection region: $\chi^2>a$ where is the 95% quantile of the null distr($\chi^2$ distri with $df ==(\text{# of column - 1})(\text{# of row - 1)}$)
 
 P-value: $P(\chi^2>\chi^2_{obs}|H_0)$
+
+EXP:
+
+ATTCGATCGTACTGT assume no correlation between nearby nt
+
+$H_0 P(A)=P(C)=P(T)=P(G)=0.25$
+
+as long as it make sense and you can find null distr
+
+count follow multinomial distr
+cared about one it is binomial ditr n large --> poisson ditr --> squared $\chi^2$
+
+rejection region: we reject H_0 if t>a where a is $1-\alpha$ quantile of the null distr of t
+
+test the dimmer estimate the proportion from data use $\chi^2$
+
+#### Fisher exact test:
+
+assuming the marginal count are fixed(not r.v. not the case in $\chi^2$), and the r.v. is number of male who smoke(only one single r.v. in 2X2 table)
+
+The Prob distr of the r.v. is hypergeometric distr
+Pvalue=P(6)+P(7)+P(8)
+$P(7)=\frac{\binom{8}{7} \cdot \binom{12}{2}}{\binom{20}{9}}$
+
+#### likelihood ratio test
+1. two point test:
+   $H_0$ $\theta=\theta_0$ vs $H_1$ $\theta=\theta_1$
+
+   $t=\frac{l_0}{l_1}$
+
+   assume: x1..xn ~ iid ~ $normal(\theta,\sigma^2)$
+
+   l=f(x1..xn|$\theta$,$\sigma^2$)= $l_0|\theta=0$
+
+   measure the extent the model fit the data
+
+   we reject the null hypotheses if t $\leq$ a, where a is the 5% quantile of the null distr
+
+2.

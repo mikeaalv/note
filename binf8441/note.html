@@ -148,13 +148,13 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td>accepting</td>
-<td align="left">Type I error</td>
 <td align="left"></td>
+<td align="left">Type II error</td>
 </tr>
 <tr class="even">
 <td>rejecting</td>
+<td align="left">Type I error</td>
 <td align="left"></td>
-<td align="left">Type II error</td>
 </tr>
 </tbody>
 </table>
@@ -169,7 +169,7 @@ $(document).ready(function () {
 <li><p>H0 and H1. we always put the expected significant conclusion in H1</p></li>
 <li><p>Ho and H1 are the hypotheses about <strong>parameters</strong> (<strong>population</strong>), not sample statistics(such as mean, already observe, and pretty sure) or specific case of inference/estimation</p></li>
 <li><p>test statistics, <strong>summarize</strong> the data</p></li>
-<li><p>Rejection region: decision rule for Rejecting H0. we calculating the threhold(critical value) <span class="math inline">\(\alpha\)</span>, by controling type I error. To find tyoe I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.</p></li>
+<li><p>Rejection region: decision rule for Rejecting H0. we calculating the threhold(critical value) <span class="math inline">\(\alpha\)</span>, by controling type I error. To find type I error, we need to find the prob distr of the test statistics given theat H0 is true. This distribution is also called the null dist of the test statistics.</p></li>
 </ol>
 <p>H_0: <span class="math inline">\(\mu_1 = \mu_2\)</span> H_1: <span class="math inline">\(\mu_1 \geq \mu_2\)</span></p>
 <p><span class="math inline">\(\rightarrow\)</span> H_0: <span class="math inline">\(\mu1 - \mu2 = 0\)</span> H_1: <span class="math inline">\(\mu1 - \mu2 &lt; 0\)</span></p>
@@ -211,7 +211,7 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 \]</span> a is 2.5% quantile of the null distr of <span class="math inline">\(\overline{x_1}-\overline{x_2}\)</span> b 97.5%</p>
 <p>The hardest part: the <strong>Null distribution</strong> of test statistics</p>
 <p>Rejection region: we reject <span class="math inline">\(H_0\)</span> if t &gt; a, where a is 95% (upper tail) quantile of the null dist of t</p>
-<p>P value: <span class="math inline">\(P=P(t &gt; t_{obs} \  | \  H_0)\)</span> (observed test statistics): we reject <span class="math inline">\(H_0\)</span> if P-value <span class="math inline">\(\leq \alpha\)</span> such as 5% <span class="math inline">\(alpha\)</span> is prespecified</p>
+<p>P value: <span class="math inline">\(P=P(t &gt; t_{obs} \  | \  H_0)\)</span> (observed test statistics): we reject <span class="math inline">\(H_0\)</span> if P-value <span class="math inline">\(\leq \alpha\)</span> such as 5% <span class="math inline">\(alpha\)</span> is prespecified pvalue is estimation of type I error</p>
 <p>Two side test:</p>
 <p><span class="math inline">\(H_0 \  \mu_1 = \mu_2 \  \mu_1 \neq \mu_2\)</span></p>
 <p><span class="math inline">\(t = \overline{X_1} - \overline{X_2}\)</span></p>
@@ -225,7 +225,7 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 <p>evalution the performance of a hypothesis testing</p>
 <p>both test need to control same type I error</p>
 <p>Power <span class="math inline">\(=P(\text{reject }H_0 \  | \  H_1)=1- \text{Type II error} = P(t&gt;a \  | \  H_1)\)</span> (H1 might be a interval–&gt;power is a curve–&gt;increase with distance)</p>
-<p>which depends on the alternative distribution of t. When the alternative hypothesis is an interval, we need to calculate power for every possible value of the parameter. Thus the power is a function of the population of the parameter in H1.</p>
+<p>which depends on the <strong>alternative distribution</strong> of t. When the alternative hypothesis is an interval, we need to calculate power for every possible value of the parameter. Thus the power is a function of the population of the parameter in H1.</p>
 <p>MP test(most powerful test): likelihood ratio test</p>
 <div id="two-sample-t-test" class="section level4">
 <h4>Two sample t test</h4>
@@ -240,9 +240,9 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 <h4>F test</h4>
 <p>can multiple groups all equal or not</p>
 <p>can test variance:</p>
-<p><span class="math inline">\(H_0: \sigma_1^2 = \sigma_2^2 \  H_1: \sigma_1^2 neq \sigma_2^2\)</span></p>
+<p><span class="math inline">\(H_0: \sigma_1^2 = \sigma_2^2 \  H_1: \sigma_1^2 \neq \sigma_2^2\)</span></p>
 <p>can use differences or ratio using ratio There</p>
-<p><span class="math inline">\(F=\frac{S_x^2}{X_y^2}\)</span> <span class="math inline">\(S=\frac{1}{n-1}\sum_{i-1}^{n}{(X_i-\overline{X})^2}\)</span></p>
+<p><span class="math inline">\(F=\frac{S_x^2}{S_y^2}\)</span> <span class="math inline">\(S=\frac{1}{n-1}\sum_{i-1}^{n}{(X_i-\overline{X})^2}\)</span></p>
 <p>rejection region F &gt; a or F &lt; b where a is the 97.5% quantile of the null distr(F distribution)</p>
 <p><span class="math inline">\(F(\alpha_1=n-1,\alpha_2=m-1)\)</span></p>
 <p>P-value <span class="math inline">\(2P(F&gt;F_{obs}|H_0)\)</span> if <span class="math inline">\(F_{obs}&gt;1\)</span> …</p>
@@ -270,11 +270,40 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 </tr>
 </tbody>
 </table>
-<p><span class="math inline">\(H_0\)</span> : gender and smoking are independent –&gt; <span class="math inline">\(P(\text{male and smoking})=P(\text{male})P(\text{smoking})\)</span> <span class="math inline">\(H_1\)</span> : gender and smoking are associated</p>
+<p><span class="math inline">\(H_0\)</span> : gender and smoking are independent &lt;==&gt; <span class="math inline">\(P(\text{male and smoking})=P(\text{male})P(\text{smoking})\)</span> <span class="math inline">\(H_1\)</span> : gender and smoking are associated/not independent</p>
+<p>smoking and gender are r.v.</p>
 <p>observed and expected value</p>
-<p>test statistics <span class="math inline">\(\chi^2=\sum{\frac{(O-E)^2}{E}}\)</span> assum poisson mean=variance</p>
-<p>rejection region: <span class="math inline">\(\chi^2&gt;a\)</span> where is the 95% quantile of the null distr(<span class="math inline">\(\chi^2\)</span> distri with <span class="math inline">\(df ==(\text{# of column - 1})(\text{# of row - 1)}\)</span>)</p>
+<p>test statistics <span class="math inline">\(\chi^2=\sum{\frac{(O-E)^2}{E}}\)</span> assum poisson mean=variance if large enough normal distr</p>
+<p>always compare observation and expected from <span class="math inline">\(H_0\)</span> <span class="math inline">\(t=\sum_{i=1}^{c}{\sum_{j=1}^{r}{\frac{(o_{ij}-e_{ij})^2}{e_{ij}}}}\)</span> expected value are not always integers, assuming data follow poisson distr, varince==mean <span class="math inline">\(e_{ij}\)</span> is variance because <span class="math inline">\((o_{ij}-e_{ij})^2\)</span> is squared level</p>
+<p>comparing: t test <span class="math inline">\(mean/sd\)</span></p>
+<p>Rejection region: we reject <span class="math inline">\(H_0\)</span> if t &gt; a (critical value) where a is 95% quanitle of null distr()</p>
+<p>P value: we reject <span class="math inline">\(H_0\)</span> if p-value <span class="math inline">\(\leq\)</span> 0.05 <span class="math inline">\(P(t&gt;t_{obs} | H_0)\)</span></p>
+<p>null distr is always needed/difficult <span class="math inline">\(df=(r-1)(c-1)\)</span> row column</p>
+<p>if <span class="math inline">\(X\)</span> ~ <span class="math inline">\(Normal\)</span> approximately <span class="math inline">\(X^2\)</span> ~ <span class="math inline">\(\chi^2\)</span> heavy tail more in tail, non-symmetric/ based on distance/ sample size large enough(every individual count) <span class="math inline">\(&lt;5\)</span> for one would be small rejection region: <span class="math inline">\(\chi^2&gt;a\)</span> where is the 95% quantile of the null distr(<span class="math inline">\(\chi^2\)</span> distri with <span class="math inline">\(df ==(\text{# of column - 1})(\text{# of row - 1)}\)</span>)</p>
 <p>P-value: <span class="math inline">\(P(\chi^2&gt;\chi^2_{obs}|H_0)\)</span></p>
+<p>EXP:</p>
+<p>ATTCGATCGTACTGT assume no correlation between nearby nt</p>
+<p><span class="math inline">\(H_0 P(A)=P(C)=P(T)=P(G)=0.25\)</span></p>
+<p>as long as it make sense and you can find null distr</p>
+<p>count follow multinomial distr cared about one it is binomial ditr n large –&gt; poisson ditr –&gt; squared <span class="math inline">\(\chi^2\)</span></p>
+<p>rejection region: we reject H_0 if t&gt;a where a is <span class="math inline">\(1-\alpha\)</span> quantile of the null distr of t</p>
+<p>test the dimmer estimate the proportion from data use <span class="math inline">\(\chi^2\)</span></p>
+</div>
+<div id="fisher-exact-test" class="section level4">
+<h4>Fisher exact test:</h4>
+<p>assuming the marginal count are fixed(not r.v. not the case in <span class="math inline">\(\chi^2\)</span>), and the r.v. is number of male who smoke(only one single r.v. in 2X2 table)</p>
+<p>The Prob distr of the r.v. is hypergeometric distr Pvalue=P(6)+P(7)+P(8) <span class="math inline">\(P(7)=\frac{\binom{8}{7} \cdot \binom{12}{2}}{\binom{20}{9}}\)</span></p>
+</div>
+<div id="likelihood-ratio-test" class="section level4">
+<h4>likelihood ratio test</h4>
+<ol style="list-style-type: decimal">
+<li>two point test: <span class="math inline">\(H_0\)</span> <span class="math inline">\(\theta=\theta_0\)</span> vs <span class="math inline">\(H_1\)</span> <span class="math inline">\(\theta=\theta_1\)</span></li>
+</ol>
+<p><span class="math inline">\(t=\frac{l_0}{l_1}\)</span></p>
+<p>assume: x1..xn ~ iid ~ <span class="math inline">\(normal(\theta,\sigma^2)\)</span></p>
+<p>l=f(x1..xn|<span class="math inline">\(\theta\)</span>,<span class="math inline">\(\sigma^2\)</span>)=<span class="math inline">\(\prod_{}{}\)</span>=<span class="math inline">\(l_0|\theta=0\)</span></p>
+<p>measure the extent the model fit the data</p>
+<p>we reject the null hypotheses if t <span class="math inline">\(leq\)</span> a, where a is the 5% quantile of the null distr 2.</p>
 </div>
 </div>
 </div>
