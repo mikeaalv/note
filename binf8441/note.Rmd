@@ -236,11 +236,11 @@ The Prob distr of the r.v. is hypergeometric distr
 Pvalue=P(6)+P(7)+P(8)
 $P(7)=\frac{\binom{8}{7} \cdot \binom{12}{2}}{\binom{20}{9}}$
 
-#### likelihood ratio test
+#### likelihood ratio test (LRT)
 1. two point test:
    $H_0$ $\theta=\theta_0$ vs $H_1$ $\theta=\theta_1$
 
-   $t=\frac{l_0}{l_1}$
+   $t=\frac{l_0}{l_1} = \frac{l(\theta=\theta_0)}{l(\theta=\theta_1)}$
 
    assume: x1..xn ~ iid ~ $normal(\theta,\sigma^2)$
 
@@ -248,6 +248,130 @@ $P(7)=\frac{\binom{8}{7} \cdot \binom{12}{2}}{\binom{20}{9}}$
 
    measure the extent the model fit the data
 
-   we reject the null hypotheses if t $\leq$ a, where a is the 5% quantile of the null distr
+   rejection region: we reject the null hypotheses if t $\leq$ a, where a is the 5% quantile of the null distr
 
-2.
+2. Neyman-Pearson Lemma: LRT for **two poins** hypothesis is the most **power** test
+
+3. The hypotheses are intevals(most cases we didn't have two exact value to compare)
+
+  $H_0$ $\theta \in \Omega_0$  $H_1$ $\theta \in \Omega_1$  no overlap
+
+  $t=\frac{l_0}{l_1} = \frac{l(\hat{\theta_{mle}}|\Omega_0)}{l(\hat{\theta_{mle}}|\Omega_1)}$
+
+  maximize the likelihood in the constraint region
+
+  average and others can be used for other...
+
+  rejection reigon: we reject the null hypotheses if t $\leq$ a, where a is the 5% quantile of the null distr
+
+4. Nested hypothesis: the null hypothesis(reduced) is nested in the alternative hypothesis(complex/almost everthing)
+
+  $H_0$ $M_0$ $H_1$ $M_1$
+
+  $t=\frac{l_0}{l_1}$ => $-2\log(t)=2(\log(l_1)-\log(l_0))$ we know the distr
+
+  where $l_0=l(\hat{\theta_{mle}}|M_0)$ and $l_1=l(\hat{\theta_{mle}}|M_1)$
+
+  the null distr of $-2\log(t)$ is asymptotically the $\chi^2$ ditr with $df=$ # of parameter in $M_1$ - # of parameter in $M_0$
+
+  Rejection region: we reject the null hypotheses $H_0$ if T $\geq$ a, where a is the 95% quantile of the null distr ($\chi^2$)
+
+  $\chi^2$ depends on nested though the distribution might be abstract, while the first two cases are with abstract distr rather than $\chi^2$
+
+1. test statistics should be the estimator for the paramter but which one? (1) compare observe with expected(null distr) (2) don't known expected(such as sequence) using likelihood ratio test
+2. null distribution: bostraping
+
+#### non parametric test
+no assume distribution
+
+Mann-Whitney test(<==> two sample t test):
+
+$H_0$: $Pop1=Pop2$ $H_0$: not equal  whether two sample from same distri/population
+
+t ranking all obs from min(1) to max for ties assign to each the average rank
+$t=\sum_{i=1}^{n}{R(X_i)}$
+
+Rejection region: we reject the $H_0$ if t>a or t< b where a is 97.5% and b is 2.5% quantile of null distr of t. {there is distributon in a table} or combining the two group and resampling
+
+don't have to assume distribution rank is easier to generate/ be robust to outliers (robust statistics)
+
+#### multiple test
+
+Bonfferroni method: if there are n test, the overall $\alpha$ is 5% then the $\alpha$ of a single test is $\frac{5\%}{n}$ two conservative because it conrol type I error too hard
+
+change the rule FDR(False discovery rate) not care about type I error
+
+
+FDR: false discovery rate $FDR=E(\frac{\text{# of wrong rejections}}{\text{# of rejections}})$ FDR 5%. difficult to calculate but algorithm to approximate FDR
+
+The Benjamin-Hochberg procedure can be used to control FDR
+
+1. calculate P-value for each test and order them from the minimum to maximum $P_{(1)}...P_{(n)}$
+2. for given $\alpha$ find the **largest** k such that $P_{(k)} \leq \frac{k}{n} \alpha$ {largest from the end}
+3. Reject the null hypothesis for i=1,2...k
+
+$FDR \neq \alpha$
+
+
+## Monte Carlo simulation and Bootstrap(numeric approach)
+
+{test: null distribution/estimation theory: variance of point estimator}
+
+$\hat{\theta}$ is an estimator of parameter $\theta$ --> $Var(\hat{\theta})$
+
+1. Monte Carlo simulation{assume population is given}, i the population/distribution is given, we can generate multiple samples from the population and use the generated samples to approxiamate $Var(\hat{\theta})$
+
+  Example: $X_i$ ~ iid ~ $Normal(\mu=0,\sigma^2=1)$
+
+>> $\hat{\theta}$ sample median sample size=10 (same size as original sample, because are dealing with variance)
+
+>> we first generate samoles and each sample should have 10 observations,
+
+>> generate 100 samples, $Var(\hat{\theta})$ ~~ the sample variance of $\hat{\theta}_i$
+
+>> can also used for like probability $P(\hat{\theta})<3$ expectation $E(\hat{\theta})$
+
+2. the population not give, assume distribution--> estimate parameter (parametric bootstrap), or pretend the origainal data as the population
+
+parametric bootstrap estimate unknown parameters from data, generate samples from the population distribution with the unkown parameter being replaced by their estimates. each bootstrap have exactly the same sample size as the orgianal data does. for each bootstrap sample we caluclate the point estimate $\hat{\theta}$, we use the sample variance of $\hat{\theta}$ to estimate $Var(\hat{\theta})$ bootstrap sample(200~1000)
+
+3. non-parametric bootstrap: don't know the distribution, regard the original data as population and generate bootstrap sample by resampling the original data with replacement.
+
+**Examples**:
+
+Sequence==>tree, use bootstrap to find the variation of the tree estimate $\hat{T}$
+
+parametric bootstrapping: (mle parameter of tree(Phyml Raxml)) estimate parameters from the sequence data. the parameters include tree topology, brach length, and other parameter in the pylogenetic model --> simulate bootstrap samples(5 column)--> estimate $T_i$
+
+non-parametric bootstrap: generate bootstrap samples by resampling the original data with replacement (iid independent the same site dependent and different site seems independent)
+
+the model assume site are independent so have to generate this way for each site/ Can not generate each species independently
+
+**Identify independent variable/set** considering the dependence structure
+
+Bootstrap in hypothesis testing:
+
+One sample test:
+
+$H_0$ : $\mu = 0$ / $\mu_1=\mu_2$ $H_1$ : $\mu \geq 0$ / $\mu_1 \geq \mu_2$
+
+test statistics: $t=\hat{x}$ / $X^M_1-X^M_2$  the null distribution of t?
+
+1. 95% interval by $\hat{x}+-2sd(\hat{x})$ $\hat{x}$ can be found from sample variance
+2.  assume a null distribution --> bootstraping 95% quntile of the null distribution ~ 95% qunatile of (t1...tn) (test statistics)
+
+  // parametic bootstrapping:
+  (assume normal, estimate parameter)
+    X1...Xn~iid~$normal(\mu_1,\sigma^2)$
+    Y1...Ym~iid~$normal(\mu_2,\sigma^2)$
+  under $H_0$ X1...Xn,Y1...Ym ~iid~ $Normal(\mu,\sigma^2)$
+  $\hat{\mu}=$sample average of the pooled sample
+  $\hat{\sigma^2}=$sample variance of the pooled sample
+  $Normal(\mu=\hat{\mu},\sigma^2=\hat{\sigma^2})$ bootstrap calculate t, do a quantile for t1..tk the null distri of t
+  Rejection region: rejuect $H_0$ if t>a, a is 95% quantile of the null distri of t (t1..tk)
+
+  //nonparamatic bootstrap: resample data from X+Y pooled data to X(N) Y(M) also called permutation test -> quantile -> rejection region
+
+no-assumption on distr--> nonparamatic
+
+evaluate performance: simulation(as real data not known the truth/control)+real data()

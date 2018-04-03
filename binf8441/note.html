@@ -129,6 +129,7 @@ $(document).ready(function () {
 <li><a href="#hypothersis-testing">hypothersis testing</a><ul>
 <li><a href="#compare-performance">Compare performance</a></li>
 </ul></li>
+<li><a href="#monte-carlo-simulation-and-bootstrapnumeric-approach">Monte Carlo simulation and Bootstrap(numeric approach)</a></li>
 </ul>
 </div>
 
@@ -294,18 +295,116 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 <p>assuming the marginal count are fixed(not r.v. not the case in <span class="math inline">\(\chi^2\)</span>), and the r.v. is number of male who smoke(only one single r.v. in 2X2 table)</p>
 <p>The Prob distr of the r.v. is hypergeometric distr Pvalue=P(6)+P(7)+P(8) <span class="math inline">\(P(7)=\frac{\binom{8}{7} \cdot \binom{12}{2}}{\binom{20}{9}}\)</span></p>
 </div>
-<div id="likelihood-ratio-test" class="section level4">
-<h4>likelihood ratio test</h4>
+<div id="likelihood-ratio-test-lrt" class="section level4">
+<h4>likelihood ratio test (LRT)</h4>
 <ol style="list-style-type: decimal">
 <li>two point test: <span class="math inline">\(H_0\)</span> <span class="math inline">\(\theta=\theta_0\)</span> vs <span class="math inline">\(H_1\)</span> <span class="math inline">\(\theta=\theta_1\)</span></li>
 </ol>
-<p><span class="math inline">\(t=\frac{l_0}{l_1}\)</span></p>
+<p><span class="math inline">\(t=\frac{l_0}{l_1} = \frac{l(\theta=\theta_0)}{l(\theta=\theta_1)}\)</span></p>
 <p>assume: x1..xn ~ iid ~ <span class="math inline">\(normal(\theta,\sigma^2)\)</span></p>
-<p>l=f(x1..xn|<span class="math inline">\(\theta\)</span>,<span class="math inline">\(\sigma^2\)</span>)=<span class="math inline">\(\prod_{}{}\)</span>=<span class="math inline">\(l_0|\theta=0\)</span></p>
+<p>l=f(x1..xn|<span class="math inline">\(\theta\)</span>,<span class="math inline">\(\sigma^2\)</span>)= <span class="math inline">\(l_0|\theta=0\)</span></p>
 <p>measure the extent the model fit the data</p>
-<p>we reject the null hypotheses if t <span class="math inline">\(leq\)</span> a, where a is the 5% quantile of the null distr 2.</p>
+<p>rejection region: we reject the null hypotheses if t <span class="math inline">\(\leq\)</span> a, where a is the 5% quantile of the null distr</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Neyman-Pearson Lemma: LRT for <strong>two poins</strong> hypothesis is the most <strong>power</strong> test</p></li>
+<li><p>The hypotheses are intevals(most cases we didn’t have two exact value to compare)</p></li>
+</ol>
+<p><span class="math inline">\(H_0\)</span> <span class="math inline">\(\theta \in \Omega_0\)</span> <span class="math inline">\(H_1\)</span> <span class="math inline">\(\theta \in \Omega_1\)</span> no overlap</p>
+<p><span class="math inline">\(t=\frac{l_0}{l_1} = \frac{l(\hat{\theta_{mle}}|\Omega_0)}{l(\hat{\theta_{mle}}|\Omega_1)}\)</span></p>
+<p>maximize the likelihood in the constraint region</p>
+<p>average and others can be used for other…</p>
+<p>rejection reigon: we reject the null hypotheses if t <span class="math inline">\(\leq\)</span> a, where a is the 5% quantile of the null distr</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Nested hypothesis: the null hypothesis(reduced) is nested in the alternative hypothesis(complex/almost everthing)</li>
+</ol>
+<p><span class="math inline">\(H_0\)</span> <span class="math inline">\(M_0\)</span> <span class="math inline">\(H_1\)</span> <span class="math inline">\(M_1\)</span></p>
+<p><span class="math inline">\(t=\frac{l_0}{l_1}\)</span> =&gt; <span class="math inline">\(-2\log(t)=2(\log(l_1)-\log(l_0))\)</span> we know the distr</p>
+<p>where <span class="math inline">\(l_0=l(\hat{\theta_{mle}}|M_0)\)</span> and <span class="math inline">\(l_1=l(\hat{\theta_{mle}}|M_1)\)</span></p>
+<p>the null distr of <span class="math inline">\(-2\log(t)\)</span> is asymptotically the <span class="math inline">\(\chi^2\)</span> ditr with <span class="math inline">\(df=\)</span> # of parameter in <span class="math inline">\(M_1\)</span> - # of parameter in <span class="math inline">\(M_0\)</span></p>
+<p>Rejection region: we reject the null hypotheses <span class="math inline">\(H_0\)</span> if T <span class="math inline">\(\geq\)</span> a, where a is the 95% quantile of the null distr (<span class="math inline">\(\chi^2\)</span>)</p>
+<p><span class="math inline">\(\chi^2\)</span> depends on nested though the distribution might be abstract, while the first two cases are with abstract distr rather than <span class="math inline">\(\chi^2\)</span></p>
+<ol style="list-style-type: decimal">
+<li>test statistics should be the estimator for the paramter but which one? (1) compare observe with expected(null distr) (2) don’t known expected(such as sequence) using likelihood ratio test</li>
+<li>null distribution: bostraping</li>
+</ol>
+</div>
+<div id="non-parametric-test" class="section level4">
+<h4>non parametric test</h4>
+<p>no assume distribution</p>
+<p>Mann-Whitney test(&lt;==&gt; two sample t test):</p>
+<p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(Pop1=Pop2\)</span> <span class="math inline">\(H_0\)</span>: not equal whether two sample from same distri/population</p>
+<p>t ranking all obs from min(1) to max for ties assign to each the average rank <span class="math inline">\(t=\sum_{i=1}^{n}{R(X_i)}\)</span></p>
+<p>Rejection region: we reject the <span class="math inline">\(H_0\)</span> if t&gt;a or t&lt; b where a is 97.5% and b is 2.5% quantile of null distr of t. {there is distributon in a table} or combining the two group and resampling</p>
+<p>don’t have to assume distribution rank is easier to generate/ be robust to outliers (robust statistics)</p>
+</div>
+<div id="multiple-test" class="section level4">
+<h4>multiple test</h4>
+<p>Bonfferroni method: if there are n test, the overall <span class="math inline">\(\alpha\)</span> is 5% then the <span class="math inline">\(\alpha\)</span> of a single test is <span class="math inline">\(\frac{5\%}{n}\)</span> two conservative because it conrol type I error too hard</p>
+<p>change the rule FDR(False discovery rate) not care about type I error</p>
+<p>FDR: false discovery rate <span class="math inline">\(FDR=E(\frac{\text{# of wrong rejections}}{\text{# of rejections}})\)</span> FDR 5%. difficult to calculate but algorithm to approximate FDR</p>
+<p>The Benjamin-Hochberg procedure can be used to control FDR</p>
+<ol style="list-style-type: decimal">
+<li>calculate P-value for each test and order them from the minimum to maximum <span class="math inline">\(P_{(1)}...P_{(n)}\)</span></li>
+<li>for given <span class="math inline">\(\alpha\)</span> find the <strong>largest</strong> k such that <span class="math inline">\(P_{(k)} \leq \frac{k}{n} \alpha\)</span> {largest from the end}</li>
+<li>Reject the null hypothesis for i=1,2…k</li>
+</ol>
+<p><span class="math inline">\(FDR \neq \alpha\)</span></p>
 </div>
 </div>
+</div>
+<div id="monte-carlo-simulation-and-bootstrapnumeric-approach" class="section level2">
+<h2>Monte Carlo simulation and Bootstrap(numeric approach)</h2>
+<p>{test: null distribution/estimation theory: variance of point estimator}</p>
+<p><span class="math inline">\(\hat{\theta}\)</span> is an estimator of parameter <span class="math inline">\(\theta\)</span> –&gt; <span class="math inline">\(Var(\hat{\theta})\)</span></p>
+<ol style="list-style-type: decimal">
+<li>Monte Carlo simulation{assume population is given}, i the population/distribution is given, we can generate multiple samples from the population and use the generated samples to approxiamate <span class="math inline">\(Var(\hat{\theta})\)</span></li>
+</ol>
+<p>Example: <span class="math inline">\(X_i\)</span> ~ iid ~ <span class="math inline">\(Normal(\mu=0,\sigma^2=1)\)</span></p>
+<blockquote>
+<blockquote>
+<p><span class="math inline">\(\hat{\theta}\)</span> sample median sample size=10 (same size as original sample, because are dealing with variance)</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>we first generate samoles and each sample should have 10 observations,</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>generate 100 samples, <span class="math inline">\(Var(\hat{\theta})\)</span> ~~ the sample variance of <span class="math inline">\(\hat{\theta}_i\)</span></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>can also used for like probability <span class="math inline">\(P(\hat{\theta})&lt;3\)</span> expectation <span class="math inline">\(E(\hat{\theta})\)</span></p>
+</blockquote>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>the population not give, assume distribution–&gt; estimate parameter (parametric bootstrap), or pretend the origainal data as the population</li>
+</ol>
+<p>parametric bootstrap estimate unknown parameters from data, generate samples from the population distribution with the unkown parameter being replaced by their estimates. each bootstrap have exactly the same sample size as the orgianal data does. for each bootstrap sample we caluclate the point estimate <span class="math inline">\(\hat{\theta}\)</span>, we use the sample variance of <span class="math inline">\(\hat{\theta}\)</span> to estimate <span class="math inline">\(Var(\hat{\theta})\)</span> bootstrap sample(200~1000)</p>
+<ol start="3" style="list-style-type: decimal">
+<li>non-parametric bootstrap: don’t know the distribution, regard the original data as population and generate bootstrap sample by resampling the original data with replacement.</li>
+</ol>
+<p><strong>Examples</strong>:</p>
+<p>Sequence==&gt;tree, use bootstrap to find the variation of the tree estimate <span class="math inline">\(\hat{T}\)</span></p>
+<p>parametric bootstrapping: (mle parameter of tree(Phyml Raxml)) estimate parameters from the sequence data. the parameters include tree topology, brach length, and other parameter in the pylogenetic model –&gt; simulate bootstrap samples(5 column)–&gt; estimate <span class="math inline">\(T_i\)</span></p>
+<p>non-parametric bootstrap: generate bootstrap samples by resampling the original data with replacement (iid independent the same site dependent and different site seems independent)</p>
+<p>the model assume site are independent so have to generate this way for each site/ Can not generate each species independently</p>
+<p><strong>Identify independent variable/set</strong> considering the dependence structure</p>
+<p>Bootstrap in hypothesis testing:</p>
+<p>One sample test:</p>
+<p><span class="math inline">\(H_0\)</span> : <span class="math inline">\(\mu = 0\)</span> / <span class="math inline">\(\mu_1=\mu_2\)</span> <span class="math inline">\(H_1\)</span> : <span class="math inline">\(\mu \geq 0\)</span> / <span class="math inline">\(\mu_1 \geq \mu_2\)</span></p>
+<p>test statistics: <span class="math inline">\(t=\hat{x}\)</span> / <span class="math inline">\(X^M_1-X^M_2\)</span> the null distribution of t?</p>
+<ol style="list-style-type: decimal">
+<li>95% interval by <span class="math inline">\(\hat{x}+-2sd(\hat{x})\)</span> <span class="math inline">\(\hat{x}\)</span> can be found from sample variance</li>
+<li>assume a null distribution –&gt; bootstraping 95% quntile of the null distribution ~ 95% qunatile of (t1…tn) (test statistics)</li>
+</ol>
+<p>// parametic bootstrapping: (assume normal, estimate parameter) X1…Xn<sub>iid</sub><span class="math inline">\(normal(\mu_1,\sigma^2)\)</span> Y1…Ym<sub>iid</sub><span class="math inline">\(normal(\mu_2,\sigma^2)\)</span> under <span class="math inline">\(H_0\)</span> X1…Xn,Y1…Ym <sub>iid</sub> <span class="math inline">\(Normal(\mu,\sigma^2)\)</span> <span class="math inline">\(\hat{\mu}=\)</span>sample average of the pooled sample <span class="math inline">\(\hat{\sigma^2}=\)</span>sample variance of the pooled sample <span class="math inline">\(Normal(\mu=\hat{\mu},\sigma^2=\hat{\sigma^2})\)</span> bootstrap calculate t, do a quantile for t1..tk the null distri of t Rejection region: rejuect <span class="math inline">\(H_0\)</span> if t&gt;a, a is 95% quantile of the null distri of t (t1..tk)</p>
+<p>//nonparamatic bootstrap: resample data from X+Y pooled data to X(N) Y(M) also called permutation test -&gt; quantile -&gt; rejection region</p>
+<p>no-assumption on distr–&gt; nonparamatic</p>
+<p>evaluate performance: simulation(as real data not known the truth/control)+real data()</p>
 </div>
 
 
