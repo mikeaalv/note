@@ -405,6 +405,40 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 <p>//nonparamatic bootstrap: resample data from X+Y pooled data to X(N) Y(M) also called permutation test -&gt; quantile -&gt; rejection region</p>
 <p>no-assumption on distr–&gt; nonparamatic</p>
 <p>evaluate performance: simulation(as real data not known the truth/control)+real data()</p>
+<div id="linear-regression-model" class="section level4">
+<h4>Linear regression model</h4>
+<ol style="list-style-type: decimal">
+<li><p>Simple linear regression model(<strong>assum</strong> linear relationship):</p>
+<p><span class="math inline">\(Y_i=a+bX_i+\epsilon_i\)</span></p>
+<p>Y: response/dependent variable</p>
+<p>X: explanatory/independent variable</p>
+<p><span class="math inline">\(\epsilon\)</span>: error term <span class="math inline">\(\epsilon_i\)</span> ~ iid ~ <span class="math inline">\(Normal(0,\sigma^2)\)</span></p>
+<p>Data: X,Y</p>
+<p>Parameters: a, b, <span class="math inline">\(\sigma^2\)</span></p>
+<p>We assume that X is fixed(not a <strong>random variable</strong>), but Y is a <strong>random variable</strong>, a and b are the two unknown parameters of the linear model(estimation) { <strong>independent</strong> is from sampling, while <strong>fixed</strong> means that for the obtained x value and x without error}</p>
+<p><span class="math inline">\(Y_i\)</span> ~ <span class="math inline">\(Normal(a+bx_i,\sigma^2)\)</span></p>
+<p><strong>ESTIMATION</strong>: <strong>MLE</strong> likelihood <span class="math inline">\(f(Y_1..Y_n | a,b,\sigma^2)=\prod_{i}^{n}{f(Y_i | a,b,\sigma^2)}=\prod_{i}^{n}{\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(y_i-a-bx_i)^2}{2\sigma^2}}}\)</span> {assum independent}</p>
+<p><span class="math inline">\(ll=n\log{\frac{1}{\sqrt{2\pi\sigma^2}}}-\frac{1}{2\sigma^2} \sum_{i}^{n}{(y_i-a-bx_i)^2}=f(\sigma^2)-g(\sigma^2)h(a,b)\)</span> turn out max with a and b AND <span class="math inline">\(\sigma^2\)</span> can be separated, for each <span class="math inline">\(\sigma^2\)</span> the always</p>
+<p>for any fixing value of <span class="math inline">\(\sigma^2\)</span> Maximizing logL with a and b is equivalent to minizing (sum of squared errors) <span class="math inline">\(SSE=\sum{(y_i-a-bx_i)^2}\)</span> with a and b <span class="math inline">\((Obs-Exp)^2\)</span> ~ <span class="math inline">\(error^2\)</span> Hence, the ll can be optimized with a and b first and produce f(<span class="math inline">\(\sigma^2\)</span>) (2steps)</p>
+<p>Before ML, least squared estimation has already been used by minizing the sum of squared errors. (MLE == LSE under the linear model assumption)</p>
+<p><span class="math inline">\(\widehat{b}=\frac{\sum{(X_i-\bar{X})(Y_i-\bar{Y})}}{\sum{(X_i-\bar{X})^2}}\)</span> r.v. <span class="math inline">\(E( \widehat{b} )=b\)</span> <span class="math inline">\(E(y_i)=a+bx_i\)</span> <span class="math inline">\(E(\bar{y})=a+b\bar{x}\)</span> related constant unbiased</p>
+<p><span class="math inline">\(\widehat{a}=\bar{Y}-b\bar{X}\)</span> r.v. unbiased</p>
+<p>a and b normal distribution</p>
+<p><span class="math inline">\(\widehat{\sigma^2}=\frac{\sum{(y_i-\widehat{y_i})^2}}{n-2}\)</span> depends on degree of freedom(variance average is given) unbiased r.v.</p>
+<p><span class="math inline">\(\widehat{y}=\widehat{a}+\widehat{b}X_i\)</span> expected <span class="math inline">\(y_i\)</span></p>
+<p>RES: <span class="math inline">\(Y=\widehat{a}+\widehat{b}X\)</span> if b&gt;0 positive b&lt; 0 negative b=0 no <strong>linear</strong> relationship(might quadric relationship)</p>
+<p><strong>hypotheses test</strong>: <span class="math inline">\(H_0\)</span>: <span class="math inline">\(b=0\)</span> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(b \neq 0\)</span> <span class="math inline">\(H_0\)</span> nested in <span class="math inline">\(H_1\)</span></p>
+<p>LRT=<span class="math inline">\(\frac{L_0}{L_1}\)</span></p>
+<p><span class="math inline">\(L_0=f(Y_i | H_0(b=0,a_{mle},\sigma^2_{mle}))\)</span></p>
+<p><span class="math inline">\(L_1=f(Y_i | a_{mle},b_{mle}, \sigma^2_{mle})\)</span></p>
+<p>-2log(LRT) <span class="math inline">\(\chi^2\)</span></p>
+<p>test2: <span class="math inline">\(t=\frac{\widehat{b}-b}{sd(\widehat{b})}=\frac{\widehat{b}}{sd(\widehat{b})}\)</span> t distribution</p>
+<p>lm</p>
+<p><span class="math inline">\(\epsilon=y-a-bx\)</span> residule <span class="math inline">\(\widehat{y_i}-a-b\widehat{x_i}\)</span></p>
+<p>good of fit checking model assumption(normal?)</p></li>
+</ol>
+<p>distribution of b does knonw something affect estimate</p>
+</div>
 </div>
 
 
