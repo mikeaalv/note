@@ -421,8 +421,8 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 <p><span class="math inline">\(ll=n\log{\frac{1}{\sqrt{2\pi\sigma^2}}}-\frac{1}{2\sigma^2} \sum_{i}^{n}{(y_i-a-bx_i)^2}=f(\sigma^2)-g(\sigma^2)h(a,b)\)</span> turn out max with a and b AND <span class="math inline">\(\sigma^2\)</span> can be separated, for each <span class="math inline">\(\sigma^2\)</span> the always</p>
 <p>for any fixing value of <span class="math inline">\(\sigma^2\)</span> Maximizing logL with a and b is equivalent to minizing (sum of squared errors) <span class="math inline">\(SSE=\sum{(y_i-a-bx_i)^2}\)</span> with a and b <span class="math inline">\((Obs-Exp)^2\)</span> ~ <span class="math inline">\(error^2\)</span> Hence, the ll can be optimized with a and b first and produce f(<span class="math inline">\(\sigma^2\)</span>) (2steps)</p>
 <p>Before ML, least squared estimation has already been used by minizing the sum of squared errors. (MLE == LSE under the linear model assumption)</p>
-<p><span class="math inline">\(\widehat{b}=\frac{\sum{(X_i-\bar{X})(Y_i-\bar{Y})}}{\sum{(X_i-\bar{X})^2}}\)</span> r.v. <span class="math inline">\(E( \widehat{b} )=b\)</span> <span class="math inline">\(E(y_i)=a+bx_i\)</span> <span class="math inline">\(E(\bar{y})=a+b\bar{x}\)</span> related constant unbiased</p>
-<p><span class="math inline">\(\widehat{a}=\bar{Y}-b\bar{X}\)</span> r.v. unbiased</p>
+<p><span class="math inline">\(\widehat{b}=\frac{\sum{(X_i-\bar{X})(Y_i-\bar{Y})}}{\sum{(X_i-\bar{X})^2}}\)</span> r.v. <span class="math inline">\(E( \widehat{b} )=b\)</span> <span class="math inline">\(E(y_i)=a+bx_i\)</span> <span class="math inline">\(E(\bar{y})=a+b\bar{x}\)</span> related constant <strong>unbiased</strong></p>
+<p><span class="math inline">\(\widehat{a}=\bar{Y}-b\bar{X}\)</span> r.v. <strong>unbiased</strong></p>
 <p>a and b normal distribution</p>
 <p><span class="math inline">\(\widehat{\sigma^2}=\frac{\sum{(y_i-\widehat{y_i})^2}}{n-2}\)</span> depends on degree of freedom(variance average is given) unbiased r.v.</p>
 <p><span class="math inline">\(\widehat{y}=\widehat{a}+\widehat{b}X_i\)</span> expected <span class="math inline">\(y_i\)</span></p>
@@ -433,11 +433,56 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 <p><span class="math inline">\(L_1=f(Y_i | a_{mle},b_{mle}, \sigma^2_{mle})\)</span></p>
 <p>-2log(LRT) <span class="math inline">\(\chi^2\)</span></p>
 <p>test2: <span class="math inline">\(t=\frac{\widehat{b}-b}{sd(\widehat{b})}=\frac{\widehat{b}}{sd(\widehat{b})}\)</span> t distribution</p>
-<p>lm</p>
-<p><span class="math inline">\(\epsilon=y-a-bx\)</span> residule <span class="math inline">\(\widehat{y_i}-a-b\widehat{x_i}\)</span></p>
-<p>good of fit checking model assumption(normal?)</p></li>
+<p>lm function in R</p>
+<p><span class="math inline">\(\epsilon=y-a-bx\)</span> residule=<span class="math inline">\(\widehat{y_i}-a-b\widehat{x_i}\)</span></p>
+<p>goodness of fit checking model assumption(normal?)</p></li>
 </ol>
-<p>distribution of b does knonw something affect estimate</p>
+<blockquote>
+<blockquote>
+<p>the <strong>error</strong> term are accumulated/average effect of all(<strong>many</strong>) the other factors and they are all with <strong>similar</strong> effect (CLE–&gt;<strong>normal</strong> distribution) check hypotheses test (goodness of fit)</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>use residue(<span class="math inline">\(y_1-\widehat{y_1}\)</span>) to formulate the <span class="math inline">\(\epsilon\)</span> residue plot (residue~x) mean=0 independent of each others(<strong>no pattern</strong>) –&gt; model choice? (can fit y to any funcion of x as long as that form is <strong>given</strong>) the distribution test(normality test) depends on large sample size</p>
+</blockquote>
+</blockquote>
+<div id="multiple-linear-regression" class="section level5">
+<h5>multiple linear regression:</h5>
+<p><span class="math inline">\(y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon\)</span> <span class="math inline">\(\epsilon\)</span> ~ iid ~ <span class="math inline">\(Normal(0,\sigma^2)\)</span></p>
+<p>matrix denotion</p>
+<p><span class="math inline">\(Y=(y_i)^T\)</span></p>
+<p><span class="math inline">\(X=(x_{ij})\)</span> first column all 1 for <span class="math inline">\(\beta_0\)</span></p>
+<p><span class="math inline">\(\beta=(\beta_j)\)</span></p>
+<p><span class="math inline">\(\epsilon\)</span> vector</p>
+<p>Y=X<span class="math inline">\(\beta\)</span>+<span class="math inline">\(\epsilon\)</span></p>
+<p>SSE=<span class="math inline">\((Y-X\beta)'(Y-X\beta)\)</span> we estimate <span class="math inline">\(\beta\)</span> by minizing SSE (LSE)</p>
+<p><span class="math inline">\(\frac{dSSE}{d\beta}= -2Y'X+2X'X\beta=0\)</span></p>
+<p><span class="math inline">\(X'X\)</span> symmetric</p>
+<p><span class="math inline">\(\widehat{beta}_{LSE}=(X'X)^{-1}X'Y\)</span> estimate all <span class="math inline">\(\beta\)</span> simulatiously/ same as MLE estimator</p>
+<p><span class="math inline">\(scalar'=scalar\)</span></p>
+<p><span class="math inline">\(Y_i\)</span> ~ <span class="math inline">\(normal(\beta_0+beta_1 X_1+beta_2 X_2..., \sigma^2)\)</span></p>
+<p>E(<span class="math inline">\(\widehat{beta}_{LSE}\)</span>)=<span class="math inline">\(\beta\)</span> <strong>unbiased</strong> estaimator</p>
+<p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\beta_i=0\)</span> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\beta_i \neq 0\)</span></p>
+<p>remove those equal 0, no prediction power</p>
+</div>
+<div id="transformation" class="section level5">
+<h5>transformation</h5>
+<ol style="list-style-type: decimal">
+<li>do the residule plot and make decision based on experiences</li>
+<li>log transformation(works for most cases) <span class="math inline">\(\log(y)=a+b \log(x)\)</span> OR <span class="math inline">\(y=a+b \log(x)\)</span></li>
+<li>box-cod transformation Y={<span class="math inline">\(\frac{Y^{\lambda}-1}{\lambda}\)</span> if <span class="math inline">\(\lambda \neq 0\)</span> <span class="math inline">\(log(Y)\)</span> if <span class="math inline">\(\lambda=0\)</span>} and find optimal <span class="math inline">\(lambda\)</span> by R(SSE) (boxcox) {provide some general method}</li>
+</ol>
+</div>
+<div id="variable-selection" class="section level5">
+<h5>variable selection</h5>
+<p>a subset of (<span class="math inline">\(X_i\)</span>) which have linear relaion with Y</p>
+<ol style="list-style-type: decimal">
+<li>Forward selection: start from the simplest model iwth not corvariate x, and add by hypotheses test (between simpler and more complex model) unitil we cannot reject <span class="math inline">\(H_0\)</span></li>
+<li>Backward selection: we start with the full model</li>
+<li>Mixed selection:</li>
+</ol>
+</div>
 </div>
 </div>
 

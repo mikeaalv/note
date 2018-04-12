@@ -405,9 +405,9 @@ evaluate performance: simulation(as real data not known the truth/control)+real 
 
     Before ML, least squared estimation has already been used by minizing the sum of squared errors. (MLE == LSE  under the linear model assumption)
 
-    $\widehat{b}=\frac{\sum{(X_i-\bar{X})(Y_i-\bar{Y})}}{\sum{(X_i-\bar{X})^2}}$    r.v.    $E( \widehat{b} )=b$   $E(y_i)=a+bx_i$      $E(\bar{y})=a+b\bar{x}$ related constant unbiased
+    $\widehat{b}=\frac{\sum{(X_i-\bar{X})(Y_i-\bar{Y})}}{\sum{(X_i-\bar{X})^2}}$    r.v.    $E( \widehat{b} )=b$   $E(y_i)=a+bx_i$      $E(\bar{y})=a+b\bar{x}$ related constant **unbiased**
 
-    $\widehat{a}=\bar{Y}-b\bar{X}$    r.v.    unbiased
+    $\widehat{a}=\bar{Y}-b\bar{X}$    r.v.    **unbiased**
 
     a and b normal distribution
 
@@ -429,9 +429,60 @@ evaluate performance: simulation(as real data not known the truth/control)+real 
 
     test2: $t=\frac{\widehat{b}-b}{sd(\widehat{b})}=\frac{\widehat{b}}{sd(\widehat{b})}$ t distribution
 
-    lm
+    lm function in R
 
     $\epsilon=y-a-bx$
     residule=$\widehat{y_i}-a-b\widehat{x_i}$
 
-    good of fit checking model assumption(normal?)
+    goodness of fit checking model assumption(normal?)
+
+  >> the **error** term are accumulated/average effect of all(**many**) the other factors and they are all with **similar** effect (CLE-->**normal** distribution) check hypotheses test (goodness of fit)
+
+  >> use residue($y_1-\widehat{y_1}$) to formulate the $\epsilon$
+  >> residue plot (residue~x) mean=0 independent of each others(**no pattern**) --> model choice? (can fit y to any funcion of x as long as that form is **given**) the distribution test(normality test) depends on large sample size
+
+##### multiple linear regression:
+
+  $y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon$ $\epsilon$ ~ iid ~ $Normal(0,\sigma^2)$
+
+  matrix denotion
+
+  $Y=(y_i)^T$
+
+  $X=(x_{ij})$ first column all 1 for $\beta_0$
+
+  $\beta=(\beta_j)$
+
+  $\epsilon$ vector
+
+  Y=X$\beta$+$\epsilon$
+
+  SSE=$(Y-X\beta)'(Y-X\beta)$  we estimate $\beta$ by minizing SSE (LSE)
+
+  $\frac{dSSE}{d\beta}= -2Y'X+2X'X\beta=0$
+
+  $X'X$ symmetric
+
+  $\widehat{beta}_{LSE}=(X'X)^{-1}X'Y$ estimate all $\beta$ simulatiously/ same as MLE estimator
+
+  $scalar'=scalar$
+
+  $Y_i$ ~ $normal(\beta_0+beta_1 X_1+beta_2 X_2..., \sigma^2)$
+
+  E($\widehat{beta}_{LSE}$)=$\beta$ **unbiased** estaimator
+
+  $H_0$: $\beta_i=0$ $H_1$: $\beta_i \neq 0$
+
+  remove those equal 0, no prediction power
+
+##### transformation
+  1. do the residule plot and make decision based on experiences
+  2. log transformation(works for most cases) $\log(y)=a+b \log(x)$ OR $y=a+b \log(x)$
+  3. box-cod transformation Y={$\frac{Y^{\lambda}-1}{\lambda}$ if $\lambda \neq 0$ $log(Y)$ if $\lambda=0$} and find optimal $lambda$ by R(SSE) (boxcox) {provide some general method}
+
+##### variable selection
+  a subset of ($X_i$) which have linear relaion with Y
+
+  1. Forward selection: start from the simplest model with no corvariate x, and add by hypotheses test (between simpler and more complex model) unitil we cannot reject $H_0$
+  2. Backward selection: we start with the full model
+  3. Mixed selection:
