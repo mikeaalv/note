@@ -319,33 +319,33 @@ $FDR \neq \alpha$
 
 $\hat{\theta}$ is an estimator of parameter $\theta$ --> $Var(\hat{\theta})$
 
-1. Monte Carlo simulation{assume population is given}, i the population/distribution is given, we can generate multiple samples from the population and use the generated samples to approxiamate $Var(\hat{\theta})$
+1. Monte Carlo simulation{**assume population is given**}, i the population/distribution is given, we can generate multiple samples from the population and use the generated samples to approxiamate $Var(\widehat{\theta})$
 
-  Example: $X_i$ ~ iid ~ $Normal(\mu=0,\sigma^2=1)$
+     Example: $X_i$ ~ iid ~ $Normal(\mu=0,\sigma^2=1)$
 
->> $\hat{\theta}$ sample median sample size=10 (same size as original sample, because are dealing with variance)
+     $\widehat{\theta}$ sample median sample size=10 (same size as original sample, because are dealing with variance, variance are related to sample size)
 
->> we first generate samoles and each sample should have 10 observations,
+     we first generate samples and each sample should have 10 observations,
 
->> generate 100 samples, $Var(\hat{\theta})$ ~~ the sample variance of $\hat{\theta}_i$
+     generate 100 samples, $Var(\widehat{\theta})$ ~~ the sample variance of $\widehat{\theta}_i$
 
->> can also used for like probability $P(\hat{\theta})<3$ expectation $E(\hat{\theta})$
+     can also used for like probability $P(\widehat{\theta})<3$ expectation $E(\widehat{\theta})$
 
-2. the population not give, assume distribution--> estimate parameter (parametric bootstrap), or pretend the origainal data as the population
+2. **the population not give**, assume distribution--> estimate parameter (**parametric bootstrap**), or pretend the origainal data as the population
 
-parametric bootstrap estimate unknown parameters from data, generate samples from the population distribution with the unkown parameter being replaced by their estimates. each bootstrap have exactly the same sample size as the orgianal data does. for each bootstrap sample we caluclate the point estimate $\hat{\theta}$, we use the sample variance of $\hat{\theta}$ to estimate $Var(\hat{\theta})$ bootstrap sample(200~1000)
+      parametric bootstrap estimate unknown parameters from data, generate samples from the population distribution with the unkown parameter being replaced by their estimates. each bootstrap have exactly the same sample size as the orgianal data does. for each bootstrap sample we caluclate the point estimate $\widehat{\theta}$, we use the sample variance of $\widehat{\theta}$ to estimate $Var(\widehat{\theta})$ bootstrap sample(200~1000)
 
 3. non-parametric bootstrap: don't know the distribution, regard the original data as population and generate bootstrap sample by resampling the original data with replacement.
 
 **Examples**:
 
-Sequence==>tree, use bootstrap to find the variation of the tree estimate $\hat{T}$
+&nbsp;&nbsp;&nbsp;&nbsp;Sequence==>tree, use bootstrap to find the variation of the tree estimate $\widehat{T}$
 
-parametric bootstrapping: (mle parameter of tree(Phyml Raxml)) estimate parameters from the sequence data. the parameters include tree topology, brach length, and other parameter in the pylogenetic model --> simulate bootstrap samples(5 column)--> estimate $T_i$
+&nbsp;&nbsp;&nbsp;&nbsp;parametric bootstrapping: (mle parameter of tree(Phyml Raxml)) estimate parameters from the sequence data. the parameters include tree topology, brach length, and other parameter in the pylogenetic model --> simulate bootstrap samples(5 column)--> estimate $T_i$
 
-non-parametric bootstrap: generate bootstrap samples by resampling the original data with replacement (iid independent the same site dependent and different site seems independent)
+&nbsp;&nbsp;&nbsp;&nbsp;non-parametric bootstrap: generate bootstrap samples by resampling the original data with replacement (iid independent the same site dependent and different site seems independent)
 
-the model assume site are independent so have to generate this way for each site/ Can not generate each species independently
+&nbsp;&nbsp;&nbsp;&nbsp;the model assume site are independent so have to generate this way for each site/ Can not generate each species independently
 
 **Identify independent variable/set** considering the dependence structure
 
@@ -355,26 +355,26 @@ One sample test:
 
 $H_0$ : $\mu = 0$ / $\mu_1=\mu_2$ $H_1$ : $\mu \geq 0$ / $\mu_1 \geq \mu_2$
 
-test statistics: $t=\hat{x}$ / $X^M_1-X^M_2$  the null distribution of t?
+test statistics: $t=\widehat{x}$ / $X^M_1-X^M_2$  the null distribution of t?
 
-1. 95% interval by $\hat{x}+-2sd(\hat{x})$ $\hat{x}$ can be found from sample variance
+1. 95% interval by $\widehat{x} \pm 2sd(\widehat{x})$   $sd(\widehat{x})$ can be found from sample variance
 2.  assume a null distribution --> bootstraping 95% quntile of the null distribution ~ 95% qunatile of (t1...tn) (test statistics)
 
   // parametic bootstrapping:
   (assume normal, estimate parameter)
-    X1...Xn~iid~$normal(\mu_1,\sigma^2)$
-    Y1...Ym~iid~$normal(\mu_2,\sigma^2)$
-  under $H_0$ X1...Xn,Y1...Ym ~iid~ $Normal(\mu,\sigma^2)$
-  $\hat{\mu}=$sample average of the pooled sample
-  $\hat{\sigma^2}=$sample variance of the pooled sample
-  $Normal(\mu=\hat{\mu},\sigma^2=\hat{\sigma^2})$ bootstrap calculate t, do a quantile for t1..tk the null distri of t
+    X1...Xn ~ iid ~ $normal(\mu_1,\sigma^2)$
+    Y1...Ym ~ iid ~ $normal(\mu_2,\sigma^2)$
+  under $H_0$ X1...Xn,Y1...Ym ~ iid ~ $Normal(\mu,\sigma^2)$
+  $\widehat{\mu}=$sample average of the pooled sample
+  $\widehat{\sigma^2}=$sample variance of the pooled sample
+  $Normal(\mu=\widehat{\mu},\sigma^2=\widehat{\sigma^2})$ bootstrap calculate t, do a quantile for t1..tk the null distri of t
   Rejection region: rejuect $H_0$ if t>a, a is 95% quantile of the null distri of t (t1..tk)
 
-  //nonparamatic bootstrap: resample data from X+Y pooled data to X(N) Y(M) also called permutation test -> quantile -> rejection region
+  //nonparamatic bootstrap: resample data from X+Y pooled data to X(N) Y(M) also called **permutation** test -> quantile -> rejection region
 
 no-assumption on distr--> nonparamatic
 
-evaluate performance: simulation(as real data not known the truth/control)+real data()
+evaluate performance: simulation(as real data not known the truth, but for generating data truth is known/control)+real data()
 
 
 #### Linear regression model
@@ -441,6 +441,8 @@ evaluate performance: simulation(as real data not known the truth/control)+real 
   >> use residue($y_1-\widehat{y_1}$) to formulate the $\epsilon$
   >> residue plot (residue~x) mean=0 independent of each others(**no pattern**) --> model choice? (can fit y to any funcion of x as long as that form is **given**) the distribution test(normality test) depends on large sample size
 
+  if random sampling x and y both r.v. have to use random effect linear repression model
+
 ##### multiple linear regression:
 
   $y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon$ $\epsilon$ ~ iid ~ $Normal(0,\sigma^2)$
@@ -483,6 +485,29 @@ evaluate performance: simulation(as real data not known the truth/control)+real 
 ##### variable selection
   a subset of ($X_i$) which have linear relaion with Y
 
-  1. Forward selection: start from the simplest model with no corvariate x, and add by hypotheses test (between simpler and more complex model) unitil we cannot reject $H_0$
+  1. Forward selection: start from the simplest model with no corvariate x, and add by hypotheses test (between simpler and more complex model) unitil we cannot reject $H_0$ $Y=\beta_0$ $H_1$ $Y=\beta_0+\beta_1 X_1$ lrt {y with different means but same variance} until cannot reject null hypotheses
+
+    $L_0=\prod{f(y_i|\beta_0 \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0)^2}{2\sigma^2}}}$ $y_i$ ~ $Normal(\beta_0, \sigma^2)$  $\widehat{beta_0}_{mle}=$ the sample average of $Y_i$  $\widehat{\sigma^2}_{mle}=$ the sample variance of $Y_i$
+
+    $L_1=\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}}}$ $y_i$ ~ $Normal(\beta_0+\beta_1 x_1, \sigma^2)$ $x_1$ are different for each sample
+    use MLE(LSE here) for three parameters
+
+    $H_0$ reduced model $H_1$ full model in general $L^{MLE}_0 leq L^{MLE}_1$ $ll=2(log(L_1)-log(L_0))$ assum reduced model($H_0$) we rejuect the null hypotheses if $-2 log(t) > a$ where a is the 95% quantile of the null distribution of the test statistics($\chi^2(df=1)$) got with $H_1$
+
+    statistics function of only data not parameter  $\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}$ not statistics $\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}}}$  statistics
+
   2. Backward selection: we start with the full model
-  3. Mixed selection:
+     $H_1$: full model $H_0$ reduced model  rejecting t > a 95% quantile cannot reject then choose $H_0$
+
+     the first two method might give different result(set)/ the result depends on order of adding covariance
+  3. Mixed forward and background selection
+
+  4. Least absolute shrinkage and selection operator (LASSO) minimizing $SSE = \sum{(y_i-\widehat{y_i})^2}$ subject to $\sum_{i=1}{|\beta|} \leq C$ **always give same result** **population in variable selection**  have to known the true Value of C(shrinking parameter)
+
+  $H_0$: $\beta_1=beta_2=0$    $H_1$: $\beta_1 beta_2 \neq 0$
+  rejecting t > a 95% quantile of the $\chi^2 df=2$
+
+F test: compare the SSE under $H_0$ and $H_1$, also measure the goodness of fit of the model.
+
+$F=\frac{(RSS_0-RSS_1)/(P_1-P_0)}{(RSS_1)/(n-P_1-1)}$
+reject F > a 95% quantile of F distribution ($F(P_1-P_0,n-P_1-1)$) two type degrees of freedom
