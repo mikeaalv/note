@@ -455,15 +455,15 @@ P(\overline{X_1}-\overline{X_2} \leq a \  | \  \mu_1=\mu_2)
 <li>box-cod transformation Y={<span class="math inline">\(\frac{Y^{\lambda}-1}{\lambda}\)</span> if <span class="math inline">\(\lambda \neq 0\)</span> <span class="math inline">\(log(Y)\)</span> if <span class="math inline">\(\lambda=0\)</span>} and find optimal <span class="math inline">\(lambda\)</span> by R(SSE) (boxcox) {provide some general method}</li>
 </ol>
 </div>
-<div id="variable-selection" class="section level5">
-<h5>variable selection</h5>
+<div id="variable-selectioncomparing-two-models" class="section level5">
+<h5>variable selection(comparing two models)</h5>
 <p>a subset of (<span class="math inline">\(X_i\)</span>) which have linear relaion with Y</p>
 <ol style="list-style-type: decimal">
 <li><p>Forward selection: start from the simplest model with no corvariate x, and add by hypotheses test (between simpler and more complex model) unitil we cannot reject <span class="math inline">\(H_0\)</span> <span class="math inline">\(Y=\beta_0\)</span> <span class="math inline">\(H_1\)</span> <span class="math inline">\(Y=\beta_0+\beta_1 X_1\)</span> lrt {y with different means but same variance} until cannot reject null hypotheses</p>
-<p><span class="math inline">\(L_0=\prod{f(y_i|\beta_0 \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0)^2}{2\sigma^2}}}\)</span> <span class="math inline">\(y_i\)</span> ~ <span class="math inline">\(Normal(\beta_0, \sigma^2)\)</span> <span class="math inline">\(\widehat{beta_0}_{mle}=\)</span> the sample average of <span class="math inline">\(Y_i\)</span> <span class="math inline">\(\widehat{\sigma^2}_{mle}=\)</span> the sample variance of <span class="math inline">\(Y_i\)</span></p>
-<p><span class="math inline">\(L_1=\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}}}\)</span> <span class="math inline">\(y_i\)</span> ~ <span class="math inline">\(Normal(\beta_0+\beta_1 x_1, \sigma^2)\)</span> <span class="math inline">\(x_1\)</span> are different for each sample use MLE(LSE here) for three parameters</p>
+<p><span class="math inline">\(L_0=\prod{f(y_i|\beta_0 \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} e^{-\frac{(y_i-\widehat{\beta}_0)^2}{2\sigma^2}} }\)</span> <span class="math inline">\(y_i\)</span> ~ <span class="math inline">\(Normal(\beta_0, \sigma^2)\)</span> <span class="math inline">\(\widehat{beta_0}_{mle}=\)</span> the sample average of <span class="math inline">\(Y_i\)</span> <span class="math inline">\(\widehat{\sigma^2}_{mle}=\)</span> the sample variance of <span class="math inline">\(Y_i\)</span></p>
+<p><span class="math inline">\(L_1=\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} e^{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}} }\)</span> <span class="math inline">\(y_i\)</span> ~ <span class="math inline">\(Normal(\beta_0+\beta_1 x_1, \sigma^2)\)</span> <span class="math inline">\(x_1\)</span> are different for each sample use MLE(LSE here) for three parameters</p>
 <p><span class="math inline">\(H_0\)</span> reduced model <span class="math inline">\(H_1\)</span> full model in general <span class="math inline">\(L^{MLE}_0 leq L^{MLE}_1\)</span> <span class="math inline">\(ll=2(log(L_1)-log(L_0))\)</span> assum reduced model(<span class="math inline">\(H_0\)</span>) we rejuect the null hypotheses if <span class="math inline">\(-2 log(t) &gt; a\)</span> where a is the 95% quantile of the null distribution of the test statistics(<span class="math inline">\(\chi^2(df=1)\)</span>) got with <span class="math inline">\(H_1\)</span></p>
-<p>statistics function of only data not parameter <span class="math inline">\(\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}\)</span> not statistics <span class="math inline">\(\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}}}\)</span> statistics</p></li>
+<p>statistics function of only data not parameter <span class="math inline">\(\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}\)</span> not statistics <span class="math inline">\(\prod{\frac{1}{\sqrt(2\pi\sigma^2)} e^{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}} }\)</span> statistics</p></li>
 <li><p>Backward selection: we start with the full model <span class="math inline">\(H_1\)</span>: full model <span class="math inline">\(H_0\)</span> reduced model rejecting t &gt; a 95% quantile cannot reject then choose <span class="math inline">\(H_0\)</span></p>
 the first two method might give different result(set)/ the result depends on order of adding covariance</li>
 <li><p>Mixed forward and background selection</p></li>
@@ -472,6 +472,16 @@ the first two method might give different result(set)/ the result depends on ord
 <p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\beta_1=beta_2=0\)</span> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\beta_1 beta_2 \neq 0\)</span> rejecting t &gt; a 95% quantile of the <span class="math inline">\(\chi^2 df=2\)</span></p>
 <p>F test: compare the SSE under <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span>, also measure the goodness of fit of the model.</p>
 <p><span class="math inline">\(F=\frac{(RSS_0-RSS_1)/(P_1-P_0)}{(RSS_1)/(n-P_1-1)}\)</span> reject F &gt; a 95% quantile of F distribution (<span class="math inline">\(F(P_1-P_0,n-P_1-1)\)</span>) two type degrees of freedom</p>
+<p><strong>How to compare two models</strong>: 1. likelihood ratio test(LRT) –&gt; overfitting/prefer more complicated model{generally need a test but AIC can just compare } 2. F test based on <strong>SSE</strong> 3. AIC(information criteria) -2logL+2(# of paramters) {complexity of the model} <span class="math inline">\(AIC_0\)</span> <span class="math inline">\(AIC\)</span> use model with a smaller AIC {for linear model, for other model 2 might be chaged, might use BIC} AICC(corrected for sample size)</p>
+</div>
+<div id="generalized-linear-model" class="section level5">
+<h5>generalized linear model</h5>
+<p>simple linear model: error normal distr <strong>continuous</strong></p>
+<p>classification–&gt;Bernoulli(<span class="math inline">\(P_i\)</span>)–&gt;<span class="math inline">\(P_i\)</span> depends on data–&gt;many data binomial</p>
+<p>logistic models(probability as Y)</p>
+<p><span class="math inline">\(log(\frac{P}{1-P})=a+bX\)</span> <span class="math inline">\(P=\frac{ e^{\widehat{a}x+\widehat{b}} }{1+ e^{\widehat{a}x+\widehat{b}} }\)</span></p>
+<p><span class="math inline">\(\frac{P}{1-P}\)</span>: odds ratio <span class="math inline">\([- \infty , + \infty]\)</span></p>
+<p>glm</p>
 </div>
 </div>
 </div>

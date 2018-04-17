@@ -482,19 +482,19 @@ evaluate performance: simulation(as real data not known the truth, but for gener
   2. log transformation(works for most cases) $\log(y)=a+b \log(x)$ OR $y=a+b \log(x)$
   3. box-cod transformation Y={$\frac{Y^{\lambda}-1}{\lambda}$ if $\lambda \neq 0$ $log(Y)$ if $\lambda=0$} and find optimal $lambda$ by R(SSE) (boxcox) {provide some general method}
 
-##### variable selection
+##### variable selection(comparing two models)
   a subset of ($X_i$) which have linear relaion with Y
 
   1. Forward selection: start from the simplest model with no corvariate x, and add by hypotheses test (between simpler and more complex model) unitil we cannot reject $H_0$ $Y=\beta_0$ $H_1$ $Y=\beta_0+\beta_1 X_1$ lrt {y with different means but same variance} until cannot reject null hypotheses
 
-    $L_0=\prod{f(y_i|\beta_0 \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0)^2}{2\sigma^2}}}$ $y_i$ ~ $Normal(\beta_0, \sigma^2)$  $\widehat{beta_0}_{mle}=$ the sample average of $Y_i$  $\widehat{\sigma^2}_{mle}=$ the sample variance of $Y_i$
+    $L_0=\prod{f(y_i|\beta_0 \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} e^{-\frac{(y_i-\widehat{\beta}_0)^2}{2\sigma^2}} }$ $y_i$ ~ $Normal(\beta_0, \sigma^2)$  $\widehat{beta_0}_{mle}=$ the sample average of $Y_i$  $\widehat{\sigma^2}_{mle}=$ the sample variance of $Y_i$
 
-    $L_1=\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}}}$ $y_i$ ~ $Normal(\beta_0+\beta_1 x_1, \sigma^2)$ $x_1$ are different for each sample
+    $L_1=\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}=\prod{\frac{1}{\sqrt(2\pi\sigma^2)} e^{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}} }$ $y_i$ ~ $Normal(\beta_0+\beta_1 x_1, \sigma^2)$ $x_1$ are different for each sample
     use MLE(LSE here) for three parameters
 
     $H_0$ reduced model $H_1$ full model in general $L^{MLE}_0 leq L^{MLE}_1$ $ll=2(log(L_1)-log(L_0))$ assum reduced model($H_0$) we rejuect the null hypotheses if $-2 log(t) > a$ where a is the 95% quantile of the null distribution of the test statistics($\chi^2(df=1)$) got with $H_1$
 
-    statistics function of only data not parameter  $\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}$ not statistics $\prod{\frac{1}{\sqrt(2\pi\sigma^2)} \exp{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}}}$  statistics
+    statistics function of only data not parameter  $\prod{f(y_i|\beta_0 \beta_1 x_i \sigma^2)}$ not statistics $\prod{\frac{1}{\sqrt(2\pi\sigma^2)} e^{-\frac{(y_i-\widehat{\beta}_0-\widehat{\beta_1} x_{1i})^2}{2\sigma^2}} }$  statistics
 
   2. Backward selection: we start with the full model
      $H_1$: full model $H_0$ reduced model  rejecting t > a 95% quantile cannot reject then choose $H_0$
@@ -511,3 +511,22 @@ F test: compare the SSE under $H_0$ and $H_1$, also measure the goodness of fit 
 
 $F=\frac{(RSS_0-RSS_1)/(P_1-P_0)}{(RSS_1)/(n-P_1-1)}$
 reject F > a 95% quantile of F distribution ($F(P_1-P_0,n-P_1-1)$) two type degrees of freedom
+
+**How to compare two models**:
+1. likelihood ratio test(LRT) --> overfitting/prefer more complicated model{generally need a test but AIC can just compare }
+2. F test based on **SSE**
+3. AIC(information criteria) -2logL+2(# of paramters) {complexity of the model} $AIC_0$ $AIC$ use model with a smaller AIC {for linear model, for other model 2 might be chaged, might use BIC} AICC(corrected for sample size)
+
+##### generalized linear model
+
+simple linear model: error normal distr **continuous**
+
+classification-->Bernoulli($P_i$)-->$P_i$ depends on data-->many data binomial
+
+logistic models(probability as Y)
+
+$log(\frac{P}{1-P})=a+bX$   $P=\frac{ e^{\widehat{a}x+\widehat{b}} }{1+ e^{\widehat{a}x+\widehat{b}} }$
+
+$\frac{P}{1-P}$: odds ratio $[- \infty , + \infty]$
+
+glm
