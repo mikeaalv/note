@@ -530,3 +530,62 @@ $log(\frac{P}{1-P})=a+bX$   $P=\frac{ e^{\widehat{a}x+\widehat{b}} }{1+ e^{\wide
 $\frac{P}{1-P}$: odds ratio $[- \infty , + \infty]$
 
 glm
+
+
+##### Bayesian analysis
+
+{**decision based on probability**} opinion also as data
+
+box1 5 blue 5 red   box2 9 blue 1 red
+
+(Bayes rule $P(A|B)=\frac{P(B|A)P(A)}{P(B)}$)
+
+box is I *theta*, the probability of theta without data is $P(\theta=1)=P(\theta=2)=0.5$  **Prior knowledge** {Prior probability distribution of $\theta$}
+
+$P(X=4)=P(X=4\  |\  box1)P(box1)+P(X=4\  |\  box2)P(box2)$
+
+$P(X=?\  |\  box?)$ **information observed/likelihood function**
+
+**Postior probability**: $P(box?\  |\  X=?)$=
+
+Prior knowledge are upated by new information to get postior knowledge(new idea, decision not soly based on data)
+
+**However** it is hard to obtain prior/ method to deal with it:
+
+1. pior calculated from data: **empirical** based
+
+2. no information on pior(**non-informative**): uniform distribution $P(\theta=1)=P(\theta=2)=0.5$ OR $P(\theta)=unif(a,b)$just based on data (**frequentist** / MLE close to this )
+
+3. **Sensitivity** analysis: how does the prior dist affect conclusion: robust (not changed much, concolusion reliable, data information strong),
+
+4. **conjugate** prior: a mathematical convenience giving a close-form expression for postior
+
+given P(X|$\theta$) likelihood function
+
+P($\theta$) given distribution
+
+P(X) **normalizing constant**, (integral) computational **intractable** constant $P(X)=\int{P(X|\theta)P(\theta)d\theta}$, we have to use numeric approach for approximation (MCMC algorithm, for sampling)
+
+but conjugate can **analytically** calculate P(X) **mathematical convenient** but not always making sense
+
+
+###### Bayesian hypotheses testing:
+
+$H_0$: $\mu<0$ $H_1$: $\mu>0$
+
+Model/hypotheses are parameters, can test more than 2 models
+
+postior probability $P(H_0\  |\  data)$
+
+Advantage: straightforward/nice intepration/good for modeling complex system
+
+
+###### Bayesian Estimation:
+
+Let $\widehat{\theta}$ be a Bayesian estimator of parameter $\theta$
+
+Let L($\theta$,$\widehat{\theta}$) be the loss function $l(\theta,\widehat{\theta})=(\theta-\widehat{\theta})^2$ in frequenist view,choose $\theta$ that mininaze E($(\theta-\widehat{\theta})^2$) (function of theta)
+
+in Bayesian analysis, parameter $\theta$ is a r.v. with assumed distribution, $E_{\theta}(E_{x}(\theta-\widehat{\theta})^2) = \int_{\theta}{\int_{x}{l(\theta,\widehat{\theta}) f(X|\theta)f(\theta) dx d\theta}}$ a **single value** (Bayes Risk) for MLE estimator is a **curve** based on true value
+
+If $l(\theta,\widehat{\theta})=(\theta-\widehat{\theta})^2$ then the best bayesian estimor is postior mean, which can be approximated by average of sample generated from MCMC

@@ -483,6 +483,42 @@ the first two method might give different result(set)/ the result depends on ord
 <p><span class="math inline">\(\frac{P}{1-P}\)</span>: odds ratio <span class="math inline">\([- \infty , + \infty]\)</span></p>
 <p>glm</p>
 </div>
+<div id="bayesian-analysis" class="section level5">
+<h5>Bayesian analysis</h5>
+<p>{<strong>decision based on probability</strong>} opinion also as data</p>
+<p>box1 5 blue 5 red box2 9 blue 1 red</p>
+<p>(Bayes rule <span class="math inline">\(P(A|B)=\frac{P(B|A)P(A)}{P(B)}\)</span>)</p>
+<p>box is I <em>theta</em>, the probability of theta without data is <span class="math inline">\(P(\theta=1)=P(\theta=2)=0.5\)</span> <strong>Prior knowledge</strong> {Prior probability distribution of <span class="math inline">\(\theta\)</span>}</p>
+<p><span class="math inline">\(P(X=4)=P(X=4\  |\  box1)P(box1)+P(X=4\  |\  box2)P(box2)\)</span></p>
+<p><span class="math inline">\(P(X=?\  |\  box?)\)</span> <strong>information observed/likelihood function</strong></p>
+<p><strong>Postior probability</strong>: <span class="math inline">\(P(box?\  |\  X=?)\)</span>=</p>
+<p>Prior knowledge are upated by new information to get postior knowledge(new idea, decision not soly based on data)</p>
+<p><strong>However</strong> it is hard to obtain prior/ method to deal with it:</p>
+<ol style="list-style-type: decimal">
+<li><p>pior calculated from data: <strong>empirical</strong> based</p></li>
+<li><p>no information on pior(<strong>non-informative</strong>): uniform distribution <span class="math inline">\(P(\theta=1)=P(\theta=2)=0.5\)</span> OR <span class="math inline">\(P(\theta)=unif(a,b)\)</span>just based on data (<strong>frequentist</strong> / MLE close to this )</p></li>
+<li><p><strong>Sensitivity</strong> analysis: how does the prior dist affect conclusion: robust (not changed much, concolusion reliable, data information strong),</p></li>
+<li><p><strong>conjugate</strong> prior: a mathematical convenience giving a close-form expression for postior</p></li>
+</ol>
+<p>given P(X|<span class="math inline">\(\theta\)</span>) likelihood function</p>
+<p>P(<span class="math inline">\(\theta\)</span>) given distribution</p>
+<p>P(X) <strong>normalizing constant</strong>, (integral) computational <strong>intractable</strong> constant <span class="math inline">\(P(X)=\int{P(X|\theta)P(\theta)d\theta}\)</span>, we have to use numeric approach for approximation (MCMC algorithm, for sampling)</p>
+<p>but conjugate can <strong>analytically</strong> calculate P(X) <strong>mathematical convenient</strong> but not always making sense</p>
+<div id="bayesian-hypotheses-testing" class="section level6">
+<h6>Bayesian hypotheses testing:</h6>
+<p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu&lt;0\)</span> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu&gt;0\)</span></p>
+<p>Model/hypotheses are parameters, can test more than 2 models</p>
+<p>postior probability <span class="math inline">\(P(H_0\  |\  data)\)</span></p>
+<p>Advantage: straightforward/nice intepration/good for modeling complex system</p>
+</div>
+<div id="bayesian-estimation" class="section level6">
+<h6>Bayesian Estimation:</h6>
+<p>Let <span class="math inline">\(\widehat{\theta}\)</span> be a Bayesian estimator of parameter <span class="math inline">\(\theta\)</span></p>
+<p>Let L(<span class="math inline">\(\theta\)</span>,<span class="math inline">\(\widehat{\theta}\)</span>) be the loss function <span class="math inline">\(l(\theta,\widehat{\theta})=(\theta-\widehat{\theta})^2\)</span> in frequenist view,choose <span class="math inline">\(\theta\)</span> that mininaze E(<span class="math inline">\((\theta-\widehat{\theta})^2\)</span>) (function of theta)</p>
+<p>in Bayesian analysis, parameter <span class="math inline">\(\theta\)</span> is a r.v. with assumed distribution, <span class="math inline">\(E_{\theta}(E_{x}(\theta-\widehat{\theta})^2) = \int_{\theta}{\int_{x}{l(\theta,\widehat{\theta}) f(X|\theta)f(\theta) dx d\theta}}\)</span> a <strong>single value</strong> (Bayes Risk) for MLE estimator is a <strong>curve</strong> based on true value</p>
+<p>If <span class="math inline">\(l(\theta,\widehat{\theta})=(\theta-\widehat{\theta})^2\)</span> then the best bayesian estimor is postior mean, which can be approximated by average of sample generated from MCMC</p>
+</div>
+</div>
 </div>
 </div>
 
